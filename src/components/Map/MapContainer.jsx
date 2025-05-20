@@ -1,5 +1,18 @@
 import { useEffect, useRef } from 'react';
 
+const hollowRenderer = {
+  type: 'simple',
+  symbol: {
+    type: 'simple-fill',
+    color: [0, 0, 0, 0],  // transparent fill
+    outline: {
+      color: [0, 0, 0, 0.4],  // black at 20% opacity
+      width: 0.5
+    }
+
+  }
+};
+
 const MapContainer = ({ setLayers, setStores }) => {
   const mapRef = useRef(null);
 
@@ -15,7 +28,7 @@ const MapContainer = ({ setLayers, setStores }) => {
         'esri/views/MapView',
         'esri/layers/FeatureLayer'
       ], (Map, MapView, FeatureLayer) => {
-        const map = new Map({ basemap: 'streets-navigation-vector' });
+        const map = new Map({ basemap: 'topo-vector' });
 
         const view = new MapView({
           container: mapRef.current,
@@ -28,6 +41,7 @@ const MapContainer = ({ setLayers, setStores }) => {
           url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_DHC_Total_Population/FeatureServer/4',
           outFields: ['*'],
           title: 'Block Groups',
+          renderer: hollowRenderer,
           visible: true
         });
 
@@ -35,6 +49,7 @@ const MapContainer = ({ setLayers, setStores }) => {
           url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_DHC_Total_Population/FeatureServer/3',
           outFields: ['*'],
           title: 'Census Tracts',
+          renderer: hollowRenderer,
           visible: true
         });
 
