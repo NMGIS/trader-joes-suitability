@@ -29,6 +29,7 @@ const Sidebar = ({
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(true);
+  const [showDemographicsOnly, setShowDemographicsOnly] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
@@ -81,12 +82,14 @@ const Sidebar = ({
   return (
     <>
       {isMobile && (
-        <button
-          className="sidebar-toggle-btn"
-          onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-        >
-          {mobileSidebarOpen ? 'Hide Tools' : 'Show Tools'}
-        </button>
+        <div style={{ display: 'flex', gap: '0.5em', justifyContent: 'center', marginBottom: '0.5em' }}>
+          <button
+            className="sidebar-toggle-btn"
+            onClick={() => setShowDemographicsOnly(!showDemographicsOnly)}
+          >
+            {showDemographicsOnly ? 'Show Tools' : 'Show Map'}
+          </button>
+        </div>
       )}
 
       {(mobileSidebarOpen || !isMobile) && (
@@ -106,51 +109,55 @@ const Sidebar = ({
           } : {}}
         >
           <div className="sidebar-content">
-            <LayerToggles layers={layers} />
+            {(!isMobile || !showDemographicsOnly) && (
+              <>
+                <LayerToggles layers={layers} />
 
-            <hr />
+                <hr />
 
-            <StoreDropdown
-              stores={stores}
-              selectedState={selectedState}
-              setSelectedState={setSelectedState}
-              selectedStore={selectedStore}
-              setSelectedStore={setSelectedStore}
-              setSelectedGeometry={setSelectedGeometry}
-              layers={layers}
-              setTotalHouseholds={setTotalHouseholds}
-              householdTarget={householdTarget}
-            />
+                <StoreDropdown
+                  stores={stores}
+                  selectedState={selectedState}
+                  setSelectedState={setSelectedState}
+                  selectedStore={selectedStore}
+                  setSelectedStore={setSelectedStore}
+                  setSelectedGeometry={setSelectedGeometry}
+                  layers={layers}
+                  setTotalHouseholds={setTotalHouseholds}
+                  householdTarget={householdTarget}
+                />
 
-            <button
-              onClick={customPointMode ? handleCancelCustomPoint : () => setCustomPointMode(true)}
-              style={{
-                marginTop: '10px',
-                width: '100%',
-                backgroundColor: customPointMode ? '#ffa500' : '#f0f0f0',
-                border: '1px solid #ccc',
-                padding: '6px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              {customPointMode ? 'Cancel Custom Point' : 'Run Custom Point Analysis'}
-            </button>
+                <button
+                  onClick={customPointMode ? handleCancelCustomPoint : () => setCustomPointMode(true)}
+                  style={{
+                    marginTop: '10px',
+                    width: '100%',
+                    backgroundColor: customPointMode ? '#ffa500' : '#f0f0f0',
+                    border: '1px solid #ccc',
+                    padding: '6px',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {customPointMode ? 'Cancel Custom Point' : 'Run Custom Point Analysis'}
+                </button>
 
-            <button
-              onClick={handleReset}
-              style={{
-                marginTop: '10px',
-                width: '100%',
-                backgroundColor: '#6e6e6e',
-                border: '1px solid #ccc',
-                padding: '6px',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              Reset Selection
-            </button>
+                <button
+                  onClick={handleReset}
+                  style={{
+                    marginTop: '10px',
+                    width: '100%',
+                    backgroundColor: '#6e6e6e',
+                    border: '1px solid #ccc',
+                    padding: '6px',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Reset Selection
+                </button>
+              </>
+            )}
 
             <HouseholdSlider
               householdTarget={householdTarget}
