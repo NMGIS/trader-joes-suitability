@@ -1,5 +1,6 @@
 {
   "name": "trader-joes-suitability-react",
+  "homepage": "https://nmgis.github.io/trader-joes-suitability",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +8,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "react": "^19.1.0",
