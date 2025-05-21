@@ -9,12 +9,17 @@ const hollowRenderer = {
       color: [0, 0, 0, 0.4],  // black at 20% opacity
       width: 0.5
     }
-
   }
 };
 
-const MapContainer = ({ setLayers, setStores }) => {
+const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointMode }) => {
   const mapRef = useRef(null);
+  const modeRef = useRef(customPointMode);
+
+  // Keep the ref in sync with latest prop
+  useEffect(() => {
+    modeRef.current = customPointMode;
+  }, [customPointMode]);
 
   useEffect(() => {
     const waitForArcGIS = () => {
@@ -26,15 +31,18 @@ const MapContainer = ({ setLayers, setStores }) => {
       window.require([
         'esri/Map',
         'esri/views/MapView',
-        'esri/layers/FeatureLayer'
-      ], (Map, MapView, FeatureLayer) => {
+        'esri/layers/FeatureLayer',
+        'esri/symbols/PictureMarkerSymbol',
+        'esri/renderers/SimpleRenderer',
+        'esri/Graphic'
+      ], (Map, MapView, FeatureLayer, PictureMarkerSymbol, SimpleRenderer, Graphic) => {
         const map = new Map({ basemap: 'topo-vector' });
 
         const view = new MapView({
           container: mapRef.current,
           map,
-          center: [-101.0, 39.8283], // Geographic center of the continental US
-          zoom: 4                      // Broad national scale
+          center: [-101.0, 39.8283],
+          zoom: 5
         });
 
         const blockGroupsLayer = new FeatureLayer({
@@ -45,25 +53,25 @@ const MapContainer = ({ setLayers, setStores }) => {
           visible: true
         });
 
-        const tractsLayer = new FeatureLayer({
-          url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Census_2020_DHC_Total_Population/FeatureServer/3',
-          outFields: ['*'],
-          title: 'Census Tracts',
-          renderer: hollowRenderer,
-          visible: true
+        const tjSymbol = new PictureMarkerSymbol({
+          url: './public/tjicon.png',  // correct for public folder
+          width: '24px',
+          height: '24px'
         });
+
+        const tjRenderer = new SimpleRenderer({ symbol: tjSymbol });
 
         const traderJoesLayer = new FeatureLayer({
           url: 'https://services.arcgis.com/CkYmj4Spu6bZ7mge/arcgis/rest/services/Trader_Joes_Locations/FeatureServer/0',
           outFields: ['*'],
           title: 'Trader Joe’s',
-          visible: true
+          visible: true,
+          renderer: tjRenderer
         });
 
-        map.addMany([blockGroupsLayer, tractsLayer, traderJoesLayer]);
+        map.addMany([blockGroupsLayer, traderJoesLayer]);
         setLayers({
           blockGroups: blockGroupsLayer,
-          tracts: tractsLayer,
           traderJoes: traderJoesLayer
         });
 
@@ -82,12 +90,51 @@ const MapContainer = ({ setLayers, setStores }) => {
             }));
             setStores(features);
           });
+
+          // Handle custom point analysis clicks
+          view.on('click', (event) => {
+            if (!modeRef.current) return;
+
+            const point = {
+              type: 'point',
+              longitude: event.mapPoint.longitude,
+              latitude: event.mapPoint.latitude
+            };
+
+            // Remove any previous custom points
+            view.graphics.removeAll();
+            const oldPoint = view.graphics.items.find(g => g.attributes?.id === 'custom-analysis-point');
+            if (oldPoint) view.graphics.remove(oldPoint);
+            const markerGraphic = new Graphic({
+              geometry: point,
+              symbol: {
+                type: "simple-marker",
+                style: "circle",
+                color: [255, 0, 0, 0.8],
+                size: 12,
+                outline: {
+                  color: "black",
+                  width: 3
+                }
+              },
+              attributes: {
+                id: 'custom-analysis-point'
+              }
+            });
+
+            view.graphics.add(markerGraphic);
+
+            // Trigger household/demographics analysis
+            if (setTemporaryGeometry) {
+              setTemporaryGeometry(point);
+            }
+          });
         });
       });
     };
 
     waitForArcGIS();
-  }, [setLayers, setStores]);
+  }, [setLayers, setStores, setTemporaryGeometry]);
 
   return <div ref={mapRef} style={{ height: '100vh', width: '100vw' }} />;
 };

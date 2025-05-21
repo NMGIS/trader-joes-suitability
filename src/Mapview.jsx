@@ -9,6 +9,9 @@ const MapView = () => {
   const [selectedState, setSelectedState] = useState('');
   const [householdTarget, setHouseholdTarget] = useState(10000);
 
+  const [selectedGeometry, setSelectedGeometry] = useState(null);
+  const [customPointMode, setCustomPointMode] = useState(false);
+
   return (
     <>
       <Sidebar
@@ -21,13 +24,17 @@ const MapView = () => {
         setTotalHouseholds={setTotalHouseholds}
         householdTarget={householdTarget}
         setHouseholdTarget={setHouseholdTarget}
+        selectedGeometry={selectedGeometry}
+        setSelectedGeometry={setSelectedGeometry}
+        customPointMode={customPointMode}
+        setCustomPointMode={setCustomPointMode}
       />
+
       <MapContainer
-        layers={layers}
         setLayers={setLayers}
         setStores={setStores}
-        householdTarget={householdTarget}
-        setTotalHouseholds={setTotalHouseholds}
+        setTemporaryGeometry={setSelectedGeometry}
+        customPointMode={customPointMode}
       />
     </>
   );

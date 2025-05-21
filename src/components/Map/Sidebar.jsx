@@ -14,9 +14,17 @@ const Sidebar = ({
   setTotalHouseholds,
   householdTarget,
   setHouseholdTarget,
+  selectedGeometry,
+  setSelectedGeometry,
+  customPointMode,
+  setCustomPointMode
 }) => {
   const [selectedStore, setSelectedStore] = useState('');
-  const [selectedGeometry, setSelectedGeometry] = useState(null);
+  const [demographics, setDemographics] = useState({
+    totalPop: 0,
+    totalAlone: 0,
+    avgMedianAge: 0,
+  });
 
   useEffect(() => {
     if (!selectedGeometry || !layers.blockGroups || !window.view) return;
@@ -26,13 +34,39 @@ const Sidebar = ({
       layer: layers.blockGroups,
       view: window.view,
       householdTarget,
-      onResult: (graphics, total) => {
+      onResult: (graphics, total, demo) => {
+        // Preserve custom point graphic
+        const customPoint = window.view.graphics.items.find(g => g.attributes?.id === 'custom-analysis-point');
         window.view.graphics.removeAll();
+        if (customPoint) window.view.graphics.add(customPoint);
+
         window.view.graphics.addMany(graphics);
         setTotalHouseholds(total);
+        setDemographics(demo);
       }
     });
   }, [householdTarget, selectedGeometry, layers]);
+
+  const handleCancelCustomPoint = () => {
+    window.view.graphics.removeAll();
+    setSelectedStore('');
+    setSelectedGeometry(null);
+    setTotalHouseholds(0);
+    setHouseholdTarget(10000);
+    setDemographics({ totalPop: 0, totalAlone: 0, avgMedianAge: 0 });
+    setCustomPointMode(false);
+  };
+
+
+  const handleReset = () => {
+    window.view.graphics.removeAll();
+    setSelectedStore('');
+    setSelectedGeometry(null);
+    setTotalHouseholds(0);
+    setHouseholdTarget(10000);
+    setDemographics({ totalPop: 0, totalAlone: 0, avgMedianAge: 0 });
+    setCustomPointMode(false);
+  };
 
   return (
     <div
@@ -65,6 +99,36 @@ const Sidebar = ({
         householdTarget={householdTarget}
       />
 
+      <button
+        onClick={customPointMode ? handleCancelCustomPoint : () => setCustomPointMode(true)}
+        style={{
+          marginTop: '10px',
+          width: '100%',
+          backgroundColor: customPointMode ? '#ffa500' : '#f0f0f0',
+          border: '1px solid #ccc',
+          padding: '6px',
+          borderRadius: '4px',
+          cursor: 'pointer'
+        }}
+      >
+        {customPointMode ? 'Cancel Custom Point' : 'Run Custom Point Analysis'}
+      </button>
+
+      <button
+        onClick={handleReset}
+        style={{
+          marginTop: '10px',
+          width: '100%',
+          backgroundColor: '#6e6e6e',
+          border: '1px solid #ccc',
+          padding: '6px',
+          borderRadius: '4px',
+          cursor: 'pointer'
+        }}
+      >
+        Reset Selection
+      </button>
+
       <HouseholdSlider
         householdTarget={householdTarget}
         setHouseholdTarget={setHouseholdTarget}
@@ -73,6 +137,21 @@ const Sidebar = ({
       <p style={{ fontSize: '0.9em', marginTop: '10px' }}>
         <strong>Selected Households:</strong><br />
         {totalHouseholds > 0 ? totalHouseholds.toLocaleString() : 'None'}
+      </p>
+
+      <p style={{ fontSize: '0.9em' }}>
+        <strong>Total Population:</strong><br />
+        {demographics.totalPop > 0 ? demographics.totalPop.toLocaleString() : 'None'}
+      </p>
+
+      <p style={{ fontSize: '0.9em' }}>
+        <strong>Living Alone:</strong><br />
+        {demographics.totalAlone > 0 ? demographics.totalAlone.toLocaleString() : 'None'}
+      </p>
+
+      <p style={{ fontSize: '0.9em' }}>
+        <strong>Median Age:</strong><br />
+        {demographics.avgMedianAge > 0 ? demographics.avgMedianAge.toFixed(1) : 'None'}
       </p>
     </div>
   );

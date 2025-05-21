@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const layerLabels = {
   blockGroups: 'Block Groups',
-  tracts: 'Census Tracts',
+  // tracts: 'Census Tracts',
   traderJoes: 'Trader Joe’s Stores'
 };
 
