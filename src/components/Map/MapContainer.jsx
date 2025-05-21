@@ -63,7 +63,7 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
         });
 
         const tjSymbol = new PictureMarkerSymbol({
-          url: './public/tjicon.png',  // correct for public folder
+          url: '/tjicon.png',  // correct for public folder
           width: '24px',
           height: '24px'
         });
