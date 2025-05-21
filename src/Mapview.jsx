@@ -11,6 +11,8 @@ const MapView = () => {
 
   const [selectedGeometry, setSelectedGeometry] = useState(null);
   const [customPointMode, setCustomPointMode] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true); // default: visible
+
 
   return (
     <>
@@ -28,7 +30,9 @@ const MapView = () => {
         setSelectedGeometry={setSelectedGeometry}
         customPointMode={customPointMode}
         setCustomPointMode={setCustomPointMode}
+        showSidebar={showSidebar}
       />
+      
 
       <MapContainer
         setLayers={setLayers}

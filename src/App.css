@@ -45,3 +45,46 @@
     animation: logo-spin infinite 20s linear;
   }
 }
+
+/* ========== MOBILE-ONLY STYLES ========== */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  .sidebar-toggle-btn {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    z-index: 1001;
+    background-color: var(--tj-red);
+    color: white;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95em;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+  }
+
+  .sidebar-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 0.75em 1em;
+    background-color: var(--tj-bg);
+    border-top: 2px solid var(--tj-red);
+    max-height: 45vh;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    border-radius: 0;
+  }
+
+  .sidebar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+}
