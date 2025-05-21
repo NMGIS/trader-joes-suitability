@@ -63,11 +63,18 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
         });
 
         const tjSymbol = new PictureMarkerSymbol({
-          url: 'https://raw.githubusercontent.com/NMGIS/trader-joes-suitability/main/public/tjIcon.png',  
+          url: 'https://raw.githubusercontent.com/NMGIS/trader-joes-suitability/main/public/tjIcon.png',
           width: '24px',
           height: '24px'
         });
-
+        const censusTractLayer = new FeatureLayer({
+  url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/Esri_Updated_Demographics_Variables/FeatureServer/4',
+  outFields: ['*'],
+  title: 'Census Tract Demographics',
+  visible: false, // turn on manually if needed
+  renderer: hollowRenderer,
+  minScale: 250000  // optional, match block group visibility
+});
         const tjRenderer = new SimpleRenderer({ symbol: tjSymbol });
 
         const traderJoesLayer = new FeatureLayer({
@@ -75,8 +82,30 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           outFields: ['*'],
           title: 'Trader Joe’s',
           visible: true,
-          renderer: tjRenderer
+          renderer: tjRenderer,
+          labelingInfo: [{
+            labelExpressionInfo: {
+              expression: "$feature.StoreNo"
+            },
+            symbol: {
+              type: "text",
+              color: "#444", // dark gray for softer look
+              haloColor: "white",
+              haloSize: "1.5px",
+              font: {
+                size: 11,
+                family: "sans-serif",
+                weight: "bold"
+              },
+              xoffset: 0,
+              yoffset: -2 // moves label up above the icon
+            },
+            labelPlacement: "above-center",
+            minScale: 200000
+          }],
+          labelsVisible: true
         });
+
 
         map.addMany([walkabilityIndex, blockGroupsLayer, traderJoesLayer]);
         setLayers({

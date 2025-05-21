@@ -25,6 +25,7 @@ const Sidebar = ({
     totalPop: 0,
     totalAlone: 0,
     avgMedianAge: 0,
+    avgPopDensity: 0 // Added pop density
   });
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -63,7 +64,7 @@ const Sidebar = ({
     setSelectedGeometry(null);
     setTotalHouseholds(0);
     setHouseholdTarget(10000);
-    setDemographics({ totalPop: 0, totalAlone: 0, avgMedianAge: 0 });
+    setDemographics({ totalPop: 0, totalAlone: 0, avgMedianAge: 0, avgPopDensity: 0 });
     setCustomPointMode(false);
   };
 
@@ -73,7 +74,7 @@ const Sidebar = ({
     setSelectedGeometry(null);
     setTotalHouseholds(0);
     setHouseholdTarget(10000);
-    setDemographics({ totalPop: 0, totalAlone: 0, avgMedianAge: 0 });
+    setDemographics({ totalPop: 0, totalAlone: 0, avgMedianAge: 0, avgPopDensity: 0 });
     setCustomPointMode(false);
   };
 
@@ -125,6 +126,7 @@ const Sidebar = ({
                   layers={layers}
                   setTotalHouseholds={setTotalHouseholds}
                   householdTarget={householdTarget}
+                  setDemographics={setDemographics} // Pass demographics setter
                 />
 
                 <button
@@ -182,6 +184,11 @@ const Sidebar = ({
             <p style={{ fontSize: '0.9em' }}>
               <strong>Median Age:</strong><br />
               {demographics.avgMedianAge > 0 ? demographics.avgMedianAge.toFixed(1) : 'None'}
+            </p>
+
+            <p style={{ fontSize: '0.9em' }}>
+              <strong>Population Density:</strong><br />
+              {demographics.avgPopDensity > 0 ? demographics.avgPopDensity.toFixed(1) + ' ppl/km²' : 'None'}
             </p>
           </div>
         </div>

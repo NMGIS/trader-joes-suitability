@@ -10,6 +10,7 @@ const StoreDropdown = ({
   layers,
   setTotalHouseholds,
   householdTarget,
+  setDemographics // Added to handle population density and other demographic results
 }) => {
   const handleStoreSelect = async (storeNo) => {
     setSelectedStore(storeNo);
@@ -26,10 +27,11 @@ const StoreDropdown = ({
       layer: layers.blockGroups,
       view,
       householdTarget,
-      onResult: (graphics, total) => {
+      onResult: (graphics, total, demo) => {
         view.graphics.removeAll();
         view.graphics.addMany(graphics);
         setTotalHouseholds(total);
+        setDemographics(demo); // Capture population density, median age, etc.
       }
     });
   };
