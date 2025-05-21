@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 const layerLabels = {
+  walkability: 'Walkability Index',
   blockGroups: 'Block Groups',
-  // tracts: 'Census Tracts',
   traderJoes: 'Trader Joe’s Stores'
 };
 
@@ -19,7 +19,6 @@ const LayerToggles = ({ layers }) => {
 
   return (
     <div>
-      <h4>Layers</h4>
       {Object.keys(layerLabels).map((key) => (
         <div key={key} style={{ marginBottom: '6px' }}>
           <label>

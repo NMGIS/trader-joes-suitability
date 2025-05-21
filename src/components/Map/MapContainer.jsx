@@ -53,6 +53,15 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           visible: true
         });
 
+        const walkabilityIndex = new FeatureLayer({
+          url: 'https://geodata.epa.gov/arcgis/rest/services/OA/WalkabilityIndex/MapServer/0',
+          outFields: ['*'],
+          title: 'Walkability Index',
+          visible: false,
+          minScale: 200000,
+          maxScale: 0
+        });
+
         const tjSymbol = new PictureMarkerSymbol({
           url: './public/tjicon.png',  // correct for public folder
           width: '24px',
@@ -69,10 +78,11 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           renderer: tjRenderer
         });
 
-        map.addMany([blockGroupsLayer, traderJoesLayer]);
+        map.addMany([walkabilityIndex, blockGroupsLayer, traderJoesLayer]);
         setLayers({
           blockGroups: blockGroupsLayer,
-          traderJoes: traderJoesLayer
+          traderJoes: traderJoesLayer,
+          walkability: walkabilityIndex
         });
 
         view.when(() => {
