@@ -63,7 +63,7 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
         });
 
         const tjSymbol = new PictureMarkerSymbol({
-          url: '/tjicon.png',  // correct for public folder
+          url: 'https://raw.githubusercontent.com/NMGIS/trader-joes-suitability/main/public/tjIcon.png',  
           width: '24px',
           height: '24px'
         });
