@@ -188,7 +188,7 @@ const Sidebar = ({
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Population Density:</strong><br />
-              {demographics.avgPopDensity > 0 ? demographics.avgPopDensity.toFixed(1) + ' ppl/km²' : 'None'}
+              {demographics.avgPopDensity > 0 ? demographics.avgPopDensity.toFixed(1) + ' ppl/mi²' : 'None'}
             </p>
           </div>
         </div>
