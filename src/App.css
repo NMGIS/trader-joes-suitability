@@ -88,3 +88,41 @@
     gap: 0.5em;
   }
 }
+@media (max-width: 768px) {
+  .mobile-splash {
+    position: fixed;
+    inset: 0;
+    background: var(--tj-bg);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    text-align: center;
+  }
+
+  .mobile-splash-box {
+    background: white;
+    padding: 1.5em;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    max-width: 400px;
+    color: var(--tj-text);
+  }
+
+  .mobile-splash-box h2 {
+    color: var(--tj-red);
+    margin-bottom: 0.5em;
+  }
+
+  .mobile-splash-box button {
+    margin-top: 1em;
+    background-color: var(--tj-red);
+    color: white;
+    border: none;
+    padding: 0.6em 1.2em;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
