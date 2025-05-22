@@ -1,10 +1,8 @@
 // Slider for selecting target household count
 const HouseholdSlider = ({ householdTarget, setHouseholdTarget }) => {
   return (
-    <div>
-      <p style={{ marginBottom: '4px' }}>
-        <strong>{householdTarget.toLocaleString()}</strong> households
-      </p>
+    <div className="household-slider">
+      <p><strong>{householdTarget.toLocaleString()}</strong> households</p>
       <input
         type="range"
         min="5000"

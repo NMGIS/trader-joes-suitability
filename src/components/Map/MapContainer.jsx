@@ -68,13 +68,13 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           height: '24px'
         });
         const censusTractLayer = new FeatureLayer({
-  url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/Esri_Updated_Demographics_Variables/FeatureServer/4',
-  outFields: ['*'],
-  title: 'Census Tract Demographics',
-  visible: false, // turn on manually if needed
-  renderer: hollowRenderer,
-  minScale: 250000  // optional, match block group visibility
-});
+          url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/Esri_Updated_Demographics_Variables/FeatureServer/4',
+          outFields: ['*'],
+          title: 'Census Tract Demographics',
+          visible: false, 
+          renderer: hollowRenderer,
+          minScale: 250000  
+        });
         const tjRenderer = new SimpleRenderer({ symbol: tjSymbol });
 
         const traderJoesLayer = new FeatureLayer({

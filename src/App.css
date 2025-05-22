@@ -126,3 +126,22 @@
     cursor: pointer;
   }
 }
+.household-slider p {
+  margin-bottom: 4px;
+}
+
+.household-slider input[type="range"] {
+  width: 100%;
+}
+.layer-toggle {
+  margin-bottom: 6px;
+}
+.store-dropdown label {
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.store-dropdown select {
+  width: 100%;
+  margin-bottom: 10px;
+}

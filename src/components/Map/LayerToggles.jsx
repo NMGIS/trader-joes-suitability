@@ -20,7 +20,7 @@ const LayerToggles = ({ layers }) => {
   return (
     <div>
       {Object.keys(layerLabels).map((key) => (
-        <div key={key} style={{ marginBottom: '6px' }}>
+        <div key={key} className="layer-toggle">
           <label>
             <input
               type="checkbox"
