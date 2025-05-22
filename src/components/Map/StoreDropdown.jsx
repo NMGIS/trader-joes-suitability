@@ -10,7 +10,9 @@ const StoreDropdown = ({
   layers,
   setTotalHouseholds,
   householdTarget,
-  setDemographics // Added to handle population density and other demographic results
+  setDemographics,
+  labelModifier = '',
+  isComparison = false 
 }) => {
   const handleStoreSelect = async (storeNo) => {
     setSelectedStore(storeNo);
@@ -27,52 +29,54 @@ const StoreDropdown = ({
       layer: layers.blockGroups,
       view,
       householdTarget,
+      isComparison,
       onResult: (graphics, total, demo) => {
-        view.graphics.removeAll();
         view.graphics.addMany(graphics);
-        setTotalHouseholds(total);
-        setDemographics(demo); // Capture population density, median age, etc.
+
+        if (setTotalHouseholds) {
+          setTotalHouseholds(total);
+        }
+
+        setDemographics(demo);
       }
     });
   };
 
   return (
-    <>
-      <div className="store-dropdown">
-        <label>Filter by State:</label>
-        <select
-          style={{ width: '100%', marginBottom: '10px' }}
-          value={selectedState}
-          onChange={(e) => setSelectedState(e.target.value)}
-        >
-          <option value="">All States</option>
-          {[...new Set(stores.map((s) => s.state))]
-            .sort()
-            .map((state) => (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            ))}
-        </select>
+    <div className="store-dropdown">
+      <label>Filter by State{labelModifier}:</label>
+      <select
+        style={{ width: '100%', marginBottom: '10px' }}
+        value={selectedState}
+        onChange={(e) => setSelectedState(e.target.value)}
+      >
+        <option value="">All States</option>
+        {[...new Set(stores.map((s) => s.state))]
+          .sort()
+          .map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+      </select>
 
-        <label>Select StoreNo:</label>
-        <select
-          style={{ width: '100%', marginBottom: '10px' }}
-          value={selectedStore}
-          onChange={(e) => handleStoreSelect(e.target.value)}
-        >
-          <option value="">-- Select Store --</option>
-          {stores
-            .filter((s) => !selectedState || s.state === selectedState)
-            .sort((a, b) => a.storeNo - b.storeNo)
-            .map((s) => (
-              <option key={s.storeNo} value={s.storeNo}>
-                {s.storeNo}
-              </option>
-            ))}
-        </select>
-      </div>
-    </>
+      <label>Select StoreNo{labelModifier}:</label>
+      <select
+        style={{ width: '100%', marginBottom: '10px' }}
+        value={selectedStore}
+        onChange={(e) => handleStoreSelect(e.target.value)}
+      >
+        <option value="">-- Select Store --</option>
+        {stores
+          .filter((s) => !selectedState || s.state === selectedState)
+          .sort((a, b) => a.storeNo - b.storeNo)
+          .map((s) => (
+            <option key={s.storeNo} value={s.storeNo}>
+              {s.storeNo}
+            </option>
+          ))}
+      </select>
+    </div>
   );
 };
 

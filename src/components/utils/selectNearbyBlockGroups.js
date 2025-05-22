@@ -3,7 +3,8 @@ export async function selectNearbyBlockGroups({
   layer,
   view,
   householdTarget,
-  onResult
+  onResult,
+  isComparison = false
 }) {
   if (!center || !layer || !view || !householdTarget || !onResult) return;
 
@@ -121,7 +122,7 @@ export async function selectNearbyBlockGroups({
           type: 'simple-fill',
           color: [0, 0, 0, 0],
           outline: {
-            color: [255, 0, 0],
+            color: isComparison ? [0, 102, 255] : [255, 0, 0], // blue vs red
             width: 2
           }
         }

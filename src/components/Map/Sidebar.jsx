@@ -4,6 +4,14 @@ import StoreDropdown from './StoreDropdown';
 import HouseholdSlider from './HouseholdSlider';
 import { selectNearbyBlockGroups } from '../utils/selectNearbyBlockGroups';
 
+const defaultDemographics = {
+  totalPop: 0,
+  totalAlone: 0,
+  avgMedianAge: 0,
+  avgPopDensity: 0,
+  avgEduPct: null
+};
+
 const Sidebar = ({
   layers,
   setLayers,
@@ -21,14 +29,14 @@ const Sidebar = ({
   showSidebar,
 }) => {
   const [selectedStore, setSelectedStore] = useState('');
-  const [demographics, setDemographics] = useState({
-    totalPop: 0,
-    totalAlone: 0,
-    avgMedianAge: 0,
-    avgPopDensity: 0,
-    avgEduPct: null
-  });
+  const [comparisonStore, setComparisonStore] = useState('');
+  const [demographics, setDemographics] = useState(defaultDemographics);
+  const [comparisonDemographics, setComparisonDemographics] = useState(defaultDemographics);
+  const [comparisonGeometry, setComparisonGeometry] = useState(null);
+  const [comparisonHouseholds, setComparisonHouseholds] = useState(0);
 
+  const [comparisonMode, setComparisonMode] = useState(false);
+  const [hasPrimarySelection, setHasPrimarySelection] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(true);
   const [showDemographicsOnly, setShowDemographicsOnly] = useState(false);
@@ -38,6 +46,10 @@ const Sidebar = ({
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    if (selectedGeometry) setHasPrimarySelection(true);
+  }, [selectedGeometry]);
 
   useEffect(() => {
     if (!selectedGeometry || !layers.blockGroups || !window.view) return;
@@ -51,13 +63,29 @@ const Sidebar = ({
         const customPoint = window.view.graphics.items.find(g => g.attributes?.id === 'custom-analysis-point');
         window.view.graphics.removeAll();
         if (customPoint) window.view.graphics.add(customPoint);
-
         window.view.graphics.addMany(graphics);
         setTotalHouseholds(total);
         setDemographics(demo);
       }
     });
-  }, [householdTarget, selectedGeometry, layers]);
+  }, [selectedGeometry, householdTarget, layers]);
+
+  useEffect(() => {
+    if (!comparisonGeometry || !layers.blockGroups || !window.view) return;
+
+    selectNearbyBlockGroups({
+      center: comparisonGeometry,
+      layer: layers.blockGroups,
+      view: window.view,
+      householdTarget,
+      isComparison: true,
+      onResult: (graphics, total, demo) => {
+        window.view.graphics.addMany(graphics);
+        setComparisonHouseholds(total);
+        setComparisonDemographics(demo);
+      }
+    });
+  }, [comparisonGeometry, householdTarget, layers]);
 
   const handleCancelCustomPoint = () => {
     window.view.graphics.removeAll();
@@ -65,30 +93,25 @@ const Sidebar = ({
     setSelectedGeometry(null);
     setTotalHouseholds(0);
     setHouseholdTarget(10000);
-    setDemographics({
-      totalPop: 0,
-      totalAlone: 0,
-      avgMedianAge: 0,
-      avgPopDensity: 0,
-      avgEduPct: null
-    });
+    setDemographics(defaultDemographics);
     setCustomPointMode(false);
+    setHasPrimarySelection(false);
   };
 
   const handleReset = () => {
     window.view.graphics.removeAll();
     setSelectedStore('');
+    setComparisonStore('');
     setSelectedGeometry(null);
+    setComparisonGeometry(null);
     setTotalHouseholds(0);
+    setComparisonHouseholds(0);
     setHouseholdTarget(10000);
-    setDemographics({
-      totalPop: 0,
-      totalAlone: 0,
-      avgMedianAge: 0,
-      avgPopDensity: 0,
-      avgEduPct: null
-    });
+    setDemographics(defaultDemographics);
+    setComparisonDemographics(defaultDemographics);
     setCustomPointMode(false);
+    setComparisonMode(false);
+    setHasPrimarySelection(false);
   };
 
   if (!showSidebar) return null;
@@ -142,33 +165,94 @@ const Sidebar = ({
 
                 <hr />
 
-                <StoreDropdown
-                  stores={stores}
-                  selectedState={selectedState}
-                  setSelectedState={setSelectedState}
-                  selectedStore={selectedStore}
-                  setSelectedStore={setSelectedStore}
-                  setSelectedGeometry={setSelectedGeometry}
-                  layers={layers}
-                  setTotalHouseholds={setTotalHouseholds}
-                  householdTarget={householdTarget}
-                  setDemographics={setDemographics}
-                />
+                {!comparisonMode && (
+                  <>
+                    <StoreDropdown
+                      stores={stores}
+                      selectedState={selectedState}
+                      setSelectedState={setSelectedState}
+                      selectedStore={selectedStore}
+                      setSelectedStore={setSelectedStore}
+                      setSelectedGeometry={setSelectedGeometry}
+                      layers={layers}
+                      setTotalHouseholds={setTotalHouseholds}
+                      householdTarget={householdTarget}
+                      setDemographics={setDemographics}
+                    />
 
-                <button
-                  onClick={customPointMode ? handleCancelCustomPoint : () => setCustomPointMode(true)}
-                  style={{
-                    marginTop: '10px',
-                    width: '100%',
-                    backgroundColor: customPointMode ? '#ffa500' : '#f0f0f0',
-                    border: '1px solid #ccc',
-                    padding: '6px',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  {customPointMode ? 'Cancel Custom Point' : 'Run Custom Point Analysis'}
-                </button>
+                    <button
+                      onClick={customPointMode ? handleCancelCustomPoint : () => setCustomPointMode(true)}
+                      style={{
+                        marginTop: '10px',
+                        width: '100%',
+                        backgroundColor: customPointMode ? '#ffa500' : '#f0f0f0',
+                        border: '1px solid #ccc',
+                        padding: '6px',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {customPointMode ? 'Cancel Custom Point' : 'Run Custom Point Analysis'}
+                    </button>
+
+                    <button
+                      disabled={!hasPrimarySelection}
+                      onClick={() => setComparisonMode(true)}
+                      style={{
+                        marginTop: '10px',
+                        width: '100%',
+                        backgroundColor: hasPrimarySelection ? '#1e90ff' : '#ccc',
+                        color: hasPrimarySelection ? '#fff' : '#888',
+                        border: '1px solid #ccc',
+                        padding: '6px',
+                        borderRadius: '4px',
+                        cursor: hasPrimarySelection ? 'pointer' : 'not-allowed'
+                      }}
+                    >
+                      Start Comparison Mode
+                    </button>
+                  </>
+                )}
+
+                {comparisonMode && (
+                  <>
+                    <StoreDropdown
+                      stores={stores}
+                      selectedState={selectedState}
+                      setSelectedState={setSelectedState}
+                      selectedStore={comparisonStore}
+                      setSelectedStore={setComparisonStore}
+                      setSelectedGeometry={setComparisonGeometry}
+                      layers={layers}
+                      setTotalHouseholds={setComparisonHouseholds}
+                      householdTarget={householdTarget}
+                      setDemographics={setComparisonDemographics}
+                      labelModifier=" (Comparison)"
+                      isComparison={true}
+                    />
+
+                    <button
+                      onClick={() => {
+                        setComparisonMode(false);
+                        setComparisonStore('');
+                        setComparisonGeometry(null);
+                        setComparisonDemographics(defaultDemographics);
+                        setComparisonHouseholds(0);
+                      }}
+                      style={{
+                        marginTop: '10px',
+                        width: '100%',
+                        backgroundColor: '#6e6e6e',
+                        color: 'white',
+                        border: '1px solid #ccc',
+                        padding: '6px',
+                        borderRadius: '4px'
+                      }}
+                    >
+                      Cancel Comparison Mode
+                    </button>
+                  </>
+                )}
 
                 <button
                   onClick={handleReset}
@@ -194,32 +278,66 @@ const Sidebar = ({
 
             <p style={{ fontSize: '0.9em', marginTop: '10px' }}>
               <strong>Selected Households:</strong><br />
-              {totalHouseholds > 0 ? totalHouseholds.toLocaleString() : 'None'}
+              {totalHouseholds?.toLocaleString() || 'None'}
+              {comparisonMode && (
+                <span style={{ color: 'blue' }}>
+                  {' '}~ {comparisonHouseholds?.toLocaleString() || 'None'}
+                </span>
+              )}
             </p>
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Total Population:</strong><br />
-              {demographics.totalPop > 0 ? demographics.totalPop.toLocaleString() : 'None'}
+              {demographics?.totalPop?.toLocaleString() || 'None'}
+              {comparisonMode && (
+                <span style={{ color: 'blue' }}>
+                  {' '}~ {comparisonDemographics?.totalPop?.toLocaleString() || 'None'}
+                </span>
+              )}
             </p>
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Population Density:</strong><br />
-              {demographics.avgPopDensity > 0 ? demographics.avgPopDensity.toFixed(1) + ' ppl/mi²' : 'None'}
+              {demographics?.avgPopDensity ? demographics.avgPopDensity.toFixed(1) + ' ppl/mi²' : 'None'}
+              {comparisonMode && (
+                <span style={{ color: 'blue' }}>
+                  {' '}~ {comparisonDemographics?.avgPopDensity?.toFixed(1) || 'None'} ppl/mi²
+                </span>
+              )}
             </p>
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Living Alone:</strong><br />
-              {demographics.totalAlone > 0 ? demographics.totalAlone.toLocaleString() : 'None'}
+              {demographics?.totalAlone?.toLocaleString() || 'None'}
+              {comparisonMode && (
+                <span style={{ color: 'blue' }}>
+                  {' '}~ {comparisonDemographics?.totalAlone?.toLocaleString() || 'None'}
+                </span>
+              )}
             </p>
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Median Age:</strong><br />
-              {demographics.avgMedianAge > 0 ? demographics.avgMedianAge.toFixed(1) : 'None'}
+              {demographics?.avgMedianAge ? demographics.avgMedianAge.toFixed(1) : 'None'}
+              {comparisonMode && (
+                <span style={{ color: 'blue' }}>
+                  {' '}~ {comparisonDemographics?.avgMedianAge?.toFixed(1) || 'None'}
+                </span>
+              )}
             </p>
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Bachelor’s Degree or Higher:</strong><br />
-              {demographics.avgEduPct !== null ? demographics.avgEduPct.toFixed(1) + '%' : 'None'}
+              {demographics?.avgEduPct !== null && demographics?.avgEduPct !== undefined
+                ? demographics.avgEduPct.toFixed(1) + '%'
+                : 'None'}
+              {comparisonMode && (
+                <span style={{ color: 'blue' }}>
+                  {' '}~ {comparisonDemographics?.avgEduPct !== null && comparisonDemographics?.avgEduPct !== undefined
+                    ? comparisonDemographics.avgEduPct.toFixed(1) + '%'
+                    : 'None'}
+                </span>
+              )}
             </p>
           </div>
         </div>
