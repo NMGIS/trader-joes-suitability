@@ -116,7 +116,16 @@ const Sidebar = ({
           <div className="sidebar-content">
             {(!isMobile || !showDemographicsOnly) && (
               <>
-                <LayerToggles layers={layers} />
+                <div style={{ marginBottom: '1em' }}>
+                  <details>
+                    <summary style={{ fontWeight: 'bold', cursor: 'pointer' }}>
+                      Map Layers
+                    </summary>
+                    <div style={{ paddingTop: '0.5em' }}>
+                      <LayerToggles layers={layers} />
+                    </div>
+                  </details>
+                </div>
 
                 <hr />
 
