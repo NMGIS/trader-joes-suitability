@@ -25,7 +25,8 @@ const Sidebar = ({
     totalPop: 0,
     totalAlone: 0,
     avgMedianAge: 0,
-    avgPopDensity: 0 // Added pop density
+    avgPopDensity: 0,
+    avgEduPct: null
   });
 
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -64,7 +65,13 @@ const Sidebar = ({
     setSelectedGeometry(null);
     setTotalHouseholds(0);
     setHouseholdTarget(10000);
-    setDemographics({ totalPop: 0, totalAlone: 0, avgMedianAge: 0, avgPopDensity: 0 });
+    setDemographics({
+      totalPop: 0,
+      totalAlone: 0,
+      avgMedianAge: 0,
+      avgPopDensity: 0,
+      avgEduPct: null
+    });
     setCustomPointMode(false);
   };
 
@@ -74,7 +81,13 @@ const Sidebar = ({
     setSelectedGeometry(null);
     setTotalHouseholds(0);
     setHouseholdTarget(10000);
-    setDemographics({ totalPop: 0, totalAlone: 0, avgMedianAge: 0, avgPopDensity: 0 });
+    setDemographics({
+      totalPop: 0,
+      totalAlone: 0,
+      avgMedianAge: 0,
+      avgPopDensity: 0,
+      avgEduPct: null
+    });
     setCustomPointMode(false);
   };
 
@@ -139,7 +152,7 @@ const Sidebar = ({
                   layers={layers}
                   setTotalHouseholds={setTotalHouseholds}
                   householdTarget={householdTarget}
-                  setDemographics={setDemographics} // Pass demographics setter
+                  setDemographics={setDemographics}
                 />
 
                 <button
@@ -190,6 +203,11 @@ const Sidebar = ({
             </p>
 
             <p style={{ fontSize: '0.9em' }}>
+              <strong>Population Density:</strong><br />
+              {demographics.avgPopDensity > 0 ? demographics.avgPopDensity.toFixed(1) + ' ppl/mi²' : 'None'}
+            </p>
+
+            <p style={{ fontSize: '0.9em' }}>
               <strong>Living Alone:</strong><br />
               {demographics.totalAlone > 0 ? demographics.totalAlone.toLocaleString() : 'None'}
             </p>
@@ -200,8 +218,8 @@ const Sidebar = ({
             </p>
 
             <p style={{ fontSize: '0.9em' }}>
-              <strong>Population Density:</strong><br />
-              {demographics.avgPopDensity > 0 ? demographics.avgPopDensity.toFixed(1) + ' ppl/mi²' : 'None'}
+              <strong>Bachelor’s Degree or Higher:</strong><br />
+              {demographics.avgEduPct !== null ? demographics.avgEduPct.toFixed(1) + '%' : 'None'}
             </p>
           </div>
         </div>
