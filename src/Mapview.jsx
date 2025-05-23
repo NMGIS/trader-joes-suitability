@@ -21,20 +21,64 @@ const MapView = () => {
   }, []);
 
   if (showMobileSplash) {
-    return (
-      <div className="mobile-splash">
-        <div className="mobile-splash-box">
-          <h2>This map is best viewed on a desktop</h2>
-          <p>
-            This application is designed for larger screens. Please visit this app on a desktop computer for enhanced functionality and a better viewing experience.
-          </p>
-          <button onClick={() => setShowMobileSplash(false)}>
-            Continue Anyway
-          </button>
-        </div>
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        background: 'var(--tj-bg)',
+        zIndex: 2000,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '2em',
+        textAlign: 'center'
+      }}
+    >
+      <div
+        style={{
+          background: 'white',
+          padding: '1.5em',
+          borderRadius: '10px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
+          maxWidth: '400px',
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          color: 'var(--tj-text)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center'
+        }}
+      >
+        <h2 style={{ color: 'var(--tj-red)', marginBottom: '0.5em' }}>
+          This map is best viewed on a desktop
+        </h2>
+        <p>
+          This application is designed for larger screens. Please visit this app on a desktop computer for enhanced functionality and a better viewing experience.
+        </p>
+        <p>ROTATE YOUR PHONE</p>
+        <button
+          style={{
+            marginTop: '1em',
+            backgroundColor: 'var(--tj-red)',
+            color: 'white',
+            border: 'none',
+            padding: '0.6em 1.2em',
+            borderRadius: '6px',
+            fontWeight: 'bold',
+            cursor: 'pointer'
+          }}
+          onClick={() => setShowMobileSplash(false)}
+        >
+          Continue Anyway
+        </button>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
 
   return (
     <>
