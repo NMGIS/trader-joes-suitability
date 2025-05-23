@@ -6,7 +6,7 @@ const hollowRenderer = {
     type: 'simple-fill',
     color: [0, 0, 0, 0],  // transparent fill
     outline: {
-      color: [0, 0, 0, 0.4],  // black at 20% opacity
+      color: [0, 0, 0, 0.4],
       width: 0.5
     }
   }
@@ -16,7 +16,6 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
   const mapRef = useRef(null);
   const modeRef = useRef(customPointMode);
 
-  // Keep the ref in sync with latest prop
   useEffect(() => {
     modeRef.current = customPointMode;
   }, [customPointMode]);
@@ -34,8 +33,9 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
         'esri/layers/FeatureLayer',
         'esri/symbols/PictureMarkerSymbol',
         'esri/renderers/SimpleRenderer',
-        'esri/Graphic'
-      ], (Map, MapView, FeatureLayer, PictureMarkerSymbol, SimpleRenderer, Graphic) => {
+        'esri/Graphic',
+        'esri/layers/GraphicsLayer'
+      ], (Map, MapView, FeatureLayer, PictureMarkerSymbol, SimpleRenderer, Graphic, GraphicsLayer) => {
         const map = new Map({ basemap: 'topo-vector' });
 
         const view = new MapView({
@@ -62,19 +62,21 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           maxScale: 0
         });
 
+        const censusTractLayer = new FeatureLayer({
+          url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/Esri_Updated_Demographics_Variables/FeatureServer/4',
+          outFields: ['*'],
+          title: 'Census Tract Demographics',
+          visible: false,
+          renderer: hollowRenderer,
+          minScale: 250000
+        });
+
         const tjSymbol = new PictureMarkerSymbol({
           url: 'https://raw.githubusercontent.com/NMGIS/trader-joes-suitability/main/public/tjIcon.png',
           width: '24px',
           height: '24px'
         });
-        const censusTractLayer = new FeatureLayer({
-          url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/Esri_Updated_Demographics_Variables/FeatureServer/4',
-          outFields: ['*'],
-          title: 'Census Tract Demographics',
-          visible: false, 
-          renderer: hollowRenderer,
-          minScale: 250000  
-        });
+
         const tjRenderer = new SimpleRenderer({ symbol: tjSymbol });
 
         const traderJoesLayer = new FeatureLayer({
@@ -89,7 +91,7 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
             },
             symbol: {
               type: "text",
-              color: "#444", // dark gray for softer look
+              color: "#444",
               haloColor: "white",
               haloSize: "1.5px",
               font: {
@@ -98,7 +100,7 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
                 weight: "bold"
               },
               xoffset: 0,
-              yoffset: -2 // moves label up above the icon
+              yoffset: -2
             },
             labelPlacement: "above-center",
             minScale: 200000
@@ -106,12 +108,24 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           labelsVisible: true
         });
 
+        // --- NEW: Create separate graphics layers ---
+        const primaryGraphicsLayer = new GraphicsLayer({ title: 'Primary Analysis Graphics' });
+        const comparisonGraphicsLayer = new GraphicsLayer({ title: 'Comparison Analysis Graphics' });
 
-        map.addMany([walkabilityIndex, blockGroupsLayer, traderJoesLayer]);
+        map.addMany([
+          walkabilityIndex,
+          blockGroupsLayer,
+          traderJoesLayer,
+          primaryGraphicsLayer,
+          comparisonGraphicsLayer
+        ]);
+
         setLayers({
           blockGroups: blockGroupsLayer,
           traderJoes: traderJoesLayer,
-          walkability: walkabilityIndex
+          walkability: walkabilityIndex,
+          primaryGraphics: primaryGraphicsLayer,
+          comparisonGraphics: comparisonGraphicsLayer
         });
 
         view.when(() => {
@@ -130,7 +144,6 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
             setStores(features);
           });
 
-          // Handle custom point analysis clicks
           view.on('click', (event) => {
             if (!modeRef.current) return;
 
@@ -140,10 +153,10 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
               latitude: event.mapPoint.latitude
             };
 
-            // Remove any previous custom points
-            view.graphics.removeAll();
+            // Remove old point marker only
             const oldPoint = view.graphics.items.find(g => g.attributes?.id === 'custom-analysis-point');
             if (oldPoint) view.graphics.remove(oldPoint);
+
             const markerGraphic = new Graphic({
               geometry: point,
               symbol: {
@@ -163,7 +176,6 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
 
             view.graphics.add(markerGraphic);
 
-            // Trigger household/demographics analysis
             if (setTemporaryGeometry) {
               setTemporaryGeometry(point);
             }

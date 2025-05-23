@@ -12,7 +12,7 @@ const StoreDropdown = ({
   householdTarget,
   setDemographics,
   labelModifier = '',
-  isComparison = false 
+  isComparison = false
 }) => {
   const handleStoreSelect = async (storeNo) => {
     setSelectedStore(storeNo);
@@ -31,7 +31,10 @@ const StoreDropdown = ({
       householdTarget,
       isComparison,
       onResult: (graphics, total, demo) => {
-        view.graphics.addMany(graphics);
+        // Use the appropriate graphics layer
+        const targetLayer = isComparison ? layers.comparisonGraphics : layers.primaryGraphics;
+        targetLayer.removeAll();
+        targetLayer.addMany(graphics);
 
         if (setTotalHouseholds) {
           setTotalHouseholds(total);
@@ -51,13 +54,9 @@ const StoreDropdown = ({
         onChange={(e) => setSelectedState(e.target.value)}
       >
         <option value="">All States</option>
-        {[...new Set(stores.map((s) => s.state))]
-          .sort()
-          .map((state) => (
-            <option key={state} value={state}>
-              {state}
-            </option>
-          ))}
+        {[...new Set(stores.map((s) => s.state))].sort().map((state) => (
+          <option key={state} value={state}>{state}</option>
+        ))}
       </select>
 
       <label>Select StoreNo{labelModifier}:</label>

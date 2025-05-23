@@ -26,7 +26,7 @@ const Sidebar = ({
   setSelectedGeometry,
   customPointMode,
   setCustomPointMode,
-  showSidebar,
+  showSidebar
 }) => {
   const [selectedStore, setSelectedStore] = useState('');
   const [comparisonStore, setComparisonStore] = useState('');
@@ -34,9 +34,9 @@ const Sidebar = ({
   const [comparisonDemographics, setComparisonDemographics] = useState(defaultDemographics);
   const [comparisonGeometry, setComparisonGeometry] = useState(null);
   const [comparisonHouseholds, setComparisonHouseholds] = useState(0);
-
   const [comparisonMode, setComparisonMode] = useState(false);
   const [hasPrimarySelection, setHasPrimarySelection] = useState(false);
+
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(true);
   const [showDemographicsOnly, setShowDemographicsOnly] = useState(false);
@@ -60,10 +60,9 @@ const Sidebar = ({
       view: window.view,
       householdTarget,
       onResult: (graphics, total, demo) => {
-        const customPoint = window.view.graphics.items.find(g => g.attributes?.id === 'custom-analysis-point');
-        window.view.graphics.removeAll();
-        if (customPoint) window.view.graphics.add(customPoint);
-        window.view.graphics.addMany(graphics);
+        layers.primaryGraphics.removeAll();
+        layers.primaryGraphics.addMany(graphics);
+
         setTotalHouseholds(total);
         setDemographics(demo);
       }
@@ -80,7 +79,9 @@ const Sidebar = ({
       householdTarget,
       isComparison: true,
       onResult: (graphics, total, demo) => {
-        window.view.graphics.addMany(graphics);
+        layers.comparisonGraphics.removeAll();
+        layers.comparisonGraphics.addMany(graphics);
+
         setComparisonHouseholds(total);
         setComparisonDemographics(demo);
       }
@@ -88,7 +89,8 @@ const Sidebar = ({
   }, [comparisonGeometry, householdTarget, layers]);
 
   const handleCancelCustomPoint = () => {
-    window.view.graphics.removeAll();
+    layers.primaryGraphics.removeAll();
+    window.view.graphics.removeAll(); // remove custom marker
     setSelectedStore('');
     setSelectedGeometry(null);
     setTotalHouseholds(0);
@@ -99,7 +101,9 @@ const Sidebar = ({
   };
 
   const handleReset = () => {
-    window.view.graphics.removeAll();
+    layers.primaryGraphics.removeAll();
+    layers.comparisonGraphics.removeAll();
+    window.view.graphics.removeAll(); // remove custom marker
     setSelectedStore('');
     setComparisonStore('');
     setSelectedGeometry(null);
@@ -238,6 +242,7 @@ const Sidebar = ({
                         setComparisonGeometry(null);
                         setComparisonDemographics(defaultDemographics);
                         setComparisonHouseholds(0);
+                        layers.comparisonGraphics.removeAll();
                       }}
                       style={{
                         marginTop: '10px',
