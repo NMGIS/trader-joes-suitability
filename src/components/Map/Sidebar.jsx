@@ -189,8 +189,9 @@ const Sidebar = ({
                       style={{
                         marginTop: '10px',
                         width: '100%',
-                        backgroundColor: customPointMode ? '#ffa500' : '#f0f0f0',
-                        border: '1px solid #ccc',
+                        backgroundColor: customPointMode ? 'var(--tj-accent)' : 'var(--tj-bg)',
+                        color: 'var(--tj-text)',
+                        border: '1px solid var(--tj-red)',
                         padding: '6px',
                         borderRadius: '4px',
                         cursor: 'pointer'
@@ -205,13 +206,14 @@ const Sidebar = ({
                       style={{
                         marginTop: '10px',
                         width: '100%',
-                        backgroundColor: hasPrimarySelection ? '#1e90ff' : '#ccc',
-                        color: hasPrimarySelection ? '#fff' : '#888',
-                        border: '1px solid #ccc',
+                        backgroundColor: hasPrimarySelection ? 'var(--tj-red)' : '#ccc',
+                        color: hasPrimarySelection ? 'white' : '#888',
+                        border: '1px solid var(--tj-accent)',
                         padding: '6px',
                         borderRadius: '4px',
                         cursor: hasPrimarySelection ? 'pointer' : 'not-allowed'
                       }}
+
                     >
                       Start Comparison Mode
                     </button>
@@ -264,12 +266,15 @@ const Sidebar = ({
                   style={{
                     marginTop: '10px',
                     width: '100%',
-                    backgroundColor: '#6e6e6e',
-                    border: '1px solid #ccc',
+                    backgroundColor: 'white',
+                    color: 'var(--tj-red)',
+                    border: '2px solid var(--tj-red)',
                     padding: '6px',
                     borderRadius: '4px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    fontWeight: 'bold'
                   }}
+
                 >
                   Reset Selection
                 </button>

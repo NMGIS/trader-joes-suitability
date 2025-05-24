@@ -2,9 +2,9 @@
 
 :root {
   --tj-red: #b11f27;
-  --tj-bg: #fdf7f1;
-  --tj-text: #5b4636;
-  --tj-accent: #e4c49a;
+--tj-bg: #fdf7f1;
+--tj-text: #5b4636;
+--tj-accent: #e4c49a;
 
   font-family: 'Georgia', serif;
   background-color: var(--tj-bg);
