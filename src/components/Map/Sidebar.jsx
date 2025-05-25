@@ -172,18 +172,20 @@ const Sidebar = ({
 
                 {!comparisonMode && (
                   <>
-                    <StoreDropdown
-                      stores={stores}
-                      selectedState={selectedState}
-                      setSelectedState={setSelectedState}
-                      selectedStore={selectedStore}
-                      setSelectedStore={setSelectedStore}
-                      setSelectedGeometry={setSelectedGeometry}
-                      layers={layers}
-                      setTotalHouseholds={setTotalHouseholds}
-                      householdTarget={householdTarget}
-                      setDemographics={setDemographics}
-                    />
+                    {!customPointMode && (
+                      <StoreDropdown
+                        stores={stores}
+                        selectedState={selectedState}
+                        setSelectedState={setSelectedState}
+                        selectedStore={selectedStore}
+                        setSelectedStore={setSelectedStore}
+                        setSelectedGeometry={setSelectedGeometry}
+                        layers={layers}
+                        setTotalHouseholds={setTotalHouseholds}
+                        householdTarget={householdTarget}
+                        setDemographics={setDemographics}
+                      />
+                    )}
 
                     <button
                       onClick={customPointMode ? handleCancelCustomPoint : () => setCustomPointMode(true)}
@@ -214,12 +216,12 @@ const Sidebar = ({
                         borderRadius: '4px',
                         cursor: hasPrimarySelection ? 'pointer' : 'not-allowed'
                       }}
-
                     >
                       Start Comparison Mode
                     </button>
                   </>
                 )}
+
 
                 {comparisonMode && (
                   <>
