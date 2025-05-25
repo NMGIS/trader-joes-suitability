@@ -9,7 +9,8 @@ const defaultDemographics = {
   totalAlone: 0,
   avgMedianAge: 0,
   avgPopDensity: 0,
-  avgEduPct: null
+  avgEduPct: null,
+  totalAreaSqMi: 0
 };
 
 const Sidebar = ({
@@ -315,6 +316,16 @@ const Sidebar = ({
                 </span>
               )}
             </p>
+            <p style={{ fontSize: '0.9em' }}>
+              <strong>Total Area (mi²):</strong><br />
+              {demographics?.totalAreaSqMi ? demographics.totalAreaSqMi.toFixed(2) : 'None'}
+              {comparisonMode && (
+                <span style={{ color: 'blue' }}>
+                  {' '}~ {comparisonDemographics?.totalAreaSqMi?.toFixed(2) || 'None'}
+                </span>
+              )}
+            </p>
+
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Living Alone:</strong><br />

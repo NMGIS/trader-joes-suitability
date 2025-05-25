@@ -16,7 +16,8 @@ export async function selectNearbyBlockGroups({
     'P0010001',
     'P0130001',
     'P017_calc_numAlone',
-    'P001_calc_pctPopDensity'
+    'P001_calc_pctPopDensity',
+    'Shape__Area'
   ];
   query.geometry = center;
   query.distance = 50;
@@ -42,6 +43,7 @@ export async function selectNearbyBlockGroups({
     let weightedPopSum = 0;
     let popDensitySum = 0;
     let popDensityCount = 0;
+    let totalAreaSqMi = 0;
 
     const selected = [];
 
@@ -67,10 +69,13 @@ export async function selectNearbyBlockGroups({
         popDensityCount++;
       }
 
+      const areaMeters = f.attributes.Shape__Area || 0;
+      const areaMi = areaMeters / 2_589_988.11;
+      totalAreaSqMi += areaMi;
+
       if (totalHouseholds >= householdTarget) break;
     }
 
-    // Load geometryEngine, Graphic, and FeatureLayer
     const [geometryEngine, Graphic, FeatureLayer] = await new Promise((resolve) => {
       window.require(
         ['esri/geometry/geometryEngine', 'esri/Graphic', 'esri/layers/FeatureLayer'],
@@ -83,7 +88,6 @@ export async function selectNearbyBlockGroups({
       outFields: ['GEOID', 'B15002_calc_pctGEBAE', 'B15002_001E']
     });
 
-    // Build extent geometry for batch query
     const extent = geometryEngine.union(selected.map(f => f.geometry)).extent;
 
     const eduQuery = eduLayer.createQuery();
@@ -94,7 +98,6 @@ export async function selectNearbyBlockGroups({
 
     const eduResult = await eduLayer.queryFeatures(eduQuery);
 
-    // Intersect logic
     let weightedPctSum = 0;
     let totalEligiblePop = 0;
 
@@ -122,7 +125,7 @@ export async function selectNearbyBlockGroups({
           type: 'simple-fill',
           color: [0, 0, 0, 0],
           outline: {
-            color: isComparison ? [0, 102, 255] : [255, 0, 0], // blue vs red
+            color: isComparison ? [0, 102, 255] : [255, 0, 0],
             width: 2
           }
         }
@@ -133,8 +136,9 @@ export async function selectNearbyBlockGroups({
       totalPop,
       totalAlone,
       avgMedianAge: weightedPopSum > 0 ? (weightedAgeSum / weightedPopSum) : 0,
-      avgPopDensity: popDensityCount > 0 ? (popDensitySum / popDensityCount) : 0,
-      avgEduPct
+      avgPopDensity: totalAreaSqMi > 0 ? (totalPop / totalAreaSqMi) : 0,
+      avgEduPct,
+      totalAreaSqMi
     };
 
     onResult(graphics, totalHouseholds, demographics);
