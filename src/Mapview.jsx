@@ -13,6 +13,7 @@ const MapView = () => {
   const [showSidebar, setShowSidebar] = useState(true);
 
   const [showMobileSplash, setShowMobileSplash] = useState(false);
+  const isMobile = window.innerWidth <= 768;
 
   useEffect(() => {
     if (window.innerWidth <= 768) {
@@ -21,67 +22,67 @@ const MapView = () => {
   }, []);
 
   if (showMobileSplash) {
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'var(--tj-bg)',
-        zIndex: 2000,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '2em',
-        textAlign: 'center'
-      }}
-    >
+    return (
       <div
         style={{
-          background: 'white',
-          padding: '1.5em',
-          borderRadius: '10px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
-          maxWidth: '400px',
-          maxHeight: '90vh',
-          overflowY: 'auto',
-          color: 'var(--tj-text)',
+          position: 'fixed',
+          inset: 0,
+          background: 'var(--tj-bg)',
+          zIndex: 2000,
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
           justifyContent: 'center',
+          alignItems: 'center',
+          padding: '2em',
           textAlign: 'center'
         }}
       >
-        <h2 style={{ color: 'var(--tj-red)', marginBottom: '0.5em' }}>
-          This map is best viewed on a desktop
-        </h2>
-        <p>
-          This application is designed for larger screens. Please visit this app on a desktop computer for enhanced functionality and a better viewing experience.
-        </p>
-        <p>ROTATE YOUR PHONE</p>
-        <button
+        <div
           style={{
-            marginTop: '1em',
-            backgroundColor: 'var(--tj-red)',
-            color: 'white',
-            border: 'none',
-            padding: '0.6em 1.2em',
-            borderRadius: '6px',
-            fontWeight: 'bold',
-            cursor: 'pointer'
+            background: 'white',
+            padding: '1.5em',
+            borderRadius: '10px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
+            maxWidth: '400px',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            color: 'var(--tj-text)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center'
           }}
-          onClick={() => setShowMobileSplash(false)}
         >
-          Continue Anyway
-        </button>
+          <h2 style={{ color: 'var(--tj-red)', marginBottom: '0.5em' }}>
+            This map is best viewed on a desktop
+          </h2>
+          <p>
+            This application is designed for larger screens. Please visit this app on a desktop computer for enhanced functionality and a better viewing experience.
+          </p>
+          <p>ROTATE YOUR PHONE</p>
+          <button
+            style={{
+              marginTop: '1em',
+              backgroundColor: 'var(--tj-red)',
+              color: 'white',
+              border: 'none',
+              padding: '0.6em 1.2em',
+              borderRadius: '6px',
+              fontWeight: 'bold',
+              cursor: 'pointer'
+            }}
+            onClick={() => setShowMobileSplash(false)}
+          >
+            Continue Anyway
+          </button>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
 
   return (
-    <>
+    <div className={isMobile ? 'mobile-scroll-wrapper' : ''}>
       <Sidebar
         layers={layers}
         setLayers={setLayers}
@@ -105,7 +106,7 @@ const MapView = () => {
         setTemporaryGeometry={setSelectedGeometry}
         customPointMode={customPointMode}
       />
-    </>
+    </div>
   );
 };
 

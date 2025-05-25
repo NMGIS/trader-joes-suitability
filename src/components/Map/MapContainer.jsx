@@ -187,7 +187,10 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
     waitForArcGIS();
   }, [setLayers, setStores, setTemporaryGeometry]);
 
-  return <div ref={mapRef} style={{ height: '100vh', width: '100vw' }} />;
+  return <div ref={mapRef} style={{
+    height: window.innerWidth <= 768 ? '60vh' : '100vh',
+    width: '100vw'
+  }} />;
 };
 
 export default MapContainer;
