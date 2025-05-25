@@ -126,7 +126,6 @@ const Sidebar = ({
       {isMobile && (
         <div style={{ display: 'flex', gap: '0.5em', justifyContent: 'center', marginBottom: '0.5em', paddingTop: '10px' }}>
           <button
-            className="sidebar-toggle-btn"
             onClick={() => setShowDemographicsOnly(!showDemographicsOnly)}
           >
             {showDemographicsOnly ? 'Show Tools' : 'Show Map'}
@@ -136,7 +135,6 @@ const Sidebar = ({
 
       {(mobileSidebarOpen || !isMobile) && (
         <div
-          className="sidebar-container"
           style={!isMobile ? {
             position: 'absolute',
             top: 10,
@@ -158,7 +156,7 @@ const Sidebar = ({
           }}
 
         >
-          <div className="sidebar-content">
+          <div>
             {(!isMobile || !showDemographicsOnly) && (
               <>
                 <div style={{ marginBottom: '1em' }}>
