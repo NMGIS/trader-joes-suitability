@@ -124,7 +124,7 @@ const Sidebar = ({
   return (
     <>
       {isMobile && (
-        <div style={{ display: 'flex', gap: '0.5em', justifyContent: 'center', marginBottom: '0.5em' }}>
+        <div style={{ display: 'flex', gap: '0.5em', justifyContent: 'center', marginBottom: '0.5em', paddingTop: '10px' }}>
           <button
             className="sidebar-toggle-btn"
             onClick={() => setShowDemographicsOnly(!showDemographicsOnly)}
@@ -152,7 +152,11 @@ const Sidebar = ({
             boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
             width: '220px',
             color: '#000000',
-          } : {}}
+          } : {
+            paddingLeft: '1em',
+            paddingRight: '1em'
+          }}
+
         >
           <div className="sidebar-content">
             {(!isMobile || !showDemographicsOnly) && (
