@@ -135,26 +135,14 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
             returnGeometry: true,
             outFields: ['StoreNo', 'State'],
             where: '1=1'
-          }).then(async (results) => {  // 👈 make this async
+          }).then((results) => {
             const features = results.features.map((f) => ({
               geometry: f.geometry,
               storeNo: String(f.attributes.StoreNo),
               state: f.attributes.State
             }));
             setStores(features);
-
-            // Only apply national extent on first load and on mobile
-            if (window.innerWidth <= 768 && results.features.length > 0) {
-              const geometries = results.features.map(f => f.geometry);
-              const [geometryEngine] = await new Promise(resolve => {
-                window.require(['esri/geometry/geometryEngine'], (...mods) => resolve(mods));
-              });
-
-              const extent = geometryEngine.union(geometries).extent.expand(1.2);
-              view.goTo(extent, { duration: 800 });
-            }
           });
-
 
           view.on('click', (event) => {
             if (!modeRef.current) return;

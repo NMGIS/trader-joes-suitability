@@ -12,27 +12,14 @@ const MapView = () => {
   const [customPointMode, setCustomPointMode] = useState(false);
   const [showSidebar, setShowSidebar] = useState(true);
 
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [showMobileSplash, setShowMobileSplash] = useState(false);
-  const [hasDismissedSplash, setHasDismissedSplash] = useState(false);
+  const isMobile = window.innerWidth <= 768;
 
-  const isMobile = screenWidth <= 768;
-
-  // Track screen resizing or orientation changes
   useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Control splash visibility
-  useEffect(() => {
-    if (isMobile && !hasDismissedSplash) {
+    if (window.innerWidth <= 768) {
       setShowMobileSplash(true);
-    } else {
-      setShowMobileSplash(false);
     }
-  }, [isMobile, hasDismissedSplash]);
+  }, []);
 
   if (showMobileSplash) {
     return (
@@ -84,10 +71,7 @@ const MapView = () => {
               fontWeight: 'bold',
               cursor: 'pointer'
             }}
-            onClick={() => {
-              setShowMobileSplash(false);
-              setHasDismissedSplash(true);
-            }}
+            onClick={() => setShowMobileSplash(false)}
           >
             Continue Anyway
           </button>
@@ -95,6 +79,7 @@ const MapView = () => {
       </div>
     );
   }
+
 
   return (
     <div className={isMobile ? 'mobile-scroll-wrapper' : ''}>
