@@ -59,7 +59,7 @@ const MapView = () => {
           <p>
             This application is designed for larger screens. Please visit this app on a desktop computer for enhanced functionality and a better viewing experience.
           </p>
-          <p>TRY ROTATING YOUR PHONE</p>
+          <p>ROTATE YOUR PHONE</p>
           <button
             style={{
               marginTop: '1em',
@@ -100,17 +100,14 @@ const MapView = () => {
         showSidebar={showSidebar}
       />
 
-      {(!isMobile || hasDismissedSplash) && (
-        <MapContainer
-          setLayers={setLayers}
-          setStores={setStores}
-          setTemporaryGeometry={setSelectedGeometry}
-          customPointMode={customPointMode}
-        />
-      )}
+      <MapContainer
+        setLayers={setLayers}
+        setStores={setStores}
+        setTemporaryGeometry={setSelectedGeometry}
+        customPointMode={customPointMode}
+      />
     </div>
   );
-
 };
 
 export default MapView;
