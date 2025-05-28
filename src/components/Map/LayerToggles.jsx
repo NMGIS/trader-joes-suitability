@@ -33,7 +33,7 @@ const LayerToggles = ({ layers }) => {
     <div>
       {Object.keys(layerInfo).map((key) => (
         <div key={key} className="layer-toggle">
-          <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.85em' }}>
             <input
               type="checkbox"
               checked={layers[key]?.visible ?? false}
