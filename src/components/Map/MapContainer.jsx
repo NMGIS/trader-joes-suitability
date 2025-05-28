@@ -54,8 +54,9 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
         'esri/symbols/PictureMarkerSymbol',
         'esri/renderers/SimpleRenderer',
         'esri/Graphic',
-        'esri/layers/GraphicsLayer'
-      ], (Map, MapView, FeatureLayer, PictureMarkerSymbol, SimpleRenderer, Graphic, GraphicsLayer) => {
+        'esri/layers/GraphicsLayer',
+        'esri/layers/GeoJSONLayer'
+      ], (Map, MapView, FeatureLayer, PictureMarkerSymbol, SimpleRenderer, Graphic, GraphicsLayer, GeoJSONLayer) => {
         const map = new Map({ basemap: 'topo-vector' });
 
         const view = new MapView({
@@ -128,6 +129,23 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           labelsVisible: true
         });
 
+        const driveTimeIsochrones = new GeoJSONLayer({
+          url: "./trader_joes_isochrones.geojson",
+          title: "Drive Time Isochrones",
+          visible: true,
+          minScale: 150000,
+          maxScale: 0,
+          definitionExpression: "tmin > 5",  // Exclude 5-minute
+          renderer: {
+            type: "simple",
+            symbol: {
+              type: "simple-fill",
+              color: [102, 51, 153, 0.2],
+              outline: { color: [153, 102, 51, 1], width: 1 }
+            }
+          }
+        });
+
         const primaryGraphicsLayer = new GraphicsLayer({ title: 'Primary Analysis Graphics' });
         const comparisonGraphicsLayer = new GraphicsLayer({ title: 'Comparison Analysis Graphics' });
 
@@ -136,7 +154,8 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           blockGroupsLayer,
           traderJoesLayer,
           primaryGraphicsLayer,
-          comparisonGraphicsLayer
+          comparisonGraphicsLayer,
+          driveTimeIsochrones
         ]);
 
         setLayers({
@@ -144,7 +163,8 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           traderJoes: traderJoesLayer,
           walkability: walkabilityIndex,
           primaryGraphics: primaryGraphicsLayer,
-          comparisonGraphics: comparisonGraphicsLayer
+          comparisonGraphics: comparisonGraphicsLayer,
+          isochrones: driveTimeIsochrones
         });
 
         view.when(() => {
@@ -162,12 +182,12 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
             }));
             setStores(features);
             if (window.innerWidth <= 768 && window.innerHeight > window.innerWidth && results.features.length > 0) {
-  const allGeometries = results.features.map(f => f.geometry);
-  window.require(['esri/geometry/geometryEngine'], (geometryEngine) => {
-    const extent = geometryEngine.union(allGeometries).extent;
-    view.goTo(extent.expand(1.2)); // Add padding
-  });
-}
+              const allGeometries = results.features.map(f => f.geometry);
+              window.require(['esri/geometry/geometryEngine'], (geometryEngine) => {
+                const extent = geometryEngine.union(allGeometries).extent;
+                view.goTo(extent.expand(1.2)); // Add padding
+              });
+            }
 
           });
 

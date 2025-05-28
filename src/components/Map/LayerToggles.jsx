@@ -4,6 +4,10 @@ const layerInfo = {
   walkability: {
     label: 'Walkability Index'
   },
+  isochrones: {
+    label: '10 Minute Drive Time',
+    icon: 'https://raw.githubusercontent.com/NMGIS/trader-joes-suitability/main/public/iso.svg'
+  },
   blockGroups: {
     label: 'Block Groups',
     icon: 'https://raw.githubusercontent.com/NMGIS/trader-joes-suitability/main/public/blockgroups.svg'
