@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { fetchIsochrone } from '../utils/fetchIsochrone';
 
 const hollowRenderer = {
   type: 'simple',
@@ -191,7 +192,7 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
 
           });
 
-          view.on('click', (event) => {
+          view.on('click', async (event) => {
             if (!modeRef.current) return;
 
             const point = {
@@ -200,8 +201,16 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
               latitude: event.mapPoint.latitude
             };
 
+            // Remove old marker and isochrone
             const oldPoint = view.graphics.items.find(g => g.attributes?.id === 'custom-analysis-point');
             if (oldPoint) view.graphics.remove(oldPoint);
+
+            const existingIsoLayer = map.layers.find(l => l.title === 'Isochrone');
+            if (existingIsoLayer) map.remove(existingIsoLayer);
+
+            const [Graphic, GraphicsLayer] = await new Promise((resolve) =>
+              window.require(['esri/Graphic', 'esri/layers/GraphicsLayer'], (...modules) => resolve(modules))
+            );
 
             const markerGraphic = new Graphic({
               geometry: point,
@@ -215,9 +224,7 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
                   width: 3
                 }
               },
-              attributes: {
-                id: 'custom-analysis-point'
-              }
+              attributes: { id: 'custom-analysis-point' }
             });
 
             view.graphics.add(markerGraphic);
@@ -225,7 +232,33 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
             if (setTemporaryGeometry) {
               setTemporaryGeometry(point);
             }
+
+            // Fetch and render isochrone
+            try {
+              const data = await fetchIsochrone(point.longitude, point.latitude, "YOUR_ORS_API_KEY");
+              const polygonCoords = data.features[0].geometry.coordinates[0];
+
+              const isochroneGraphic = new Graphic({
+                geometry: {
+                  type: "polygon",
+                  rings: polygonCoords,
+                  spatialReference: { wkid: 4326 }
+                },
+                symbol: {
+                  type: "simple-fill",
+                  color: [102, 51, 153, 0.2],
+                  outline: { color: [153, 102, 51, 1], width: 1 }
+                }
+              });
+
+              const isoLayer = new GraphicsLayer({ title: 'Isochrone' });
+              isoLayer.add(isochroneGraphic);
+              map.add(isoLayer);
+            } catch (err) {
+              console.error("Isochrone fetch failed:", err);
+            }
           });
+
         });
       });
     };
