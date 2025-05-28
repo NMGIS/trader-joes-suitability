@@ -6,11 +6,11 @@ const layerInfo = {
   },
   blockGroups: {
     label: 'Block Groups',
-    icon: './public/blockgroups.svg'
+    icon: 'https://raw.githubusercontent.com/NMGIS/trader-joes-suitability/main/public/blockgroups.svg'
   },
   traderJoes: {
     label: 'Trader Joe’s Stores',
-    icon: './public/tjicon.png'
+    icon: 'https://raw.githubusercontent.com/NMGIS/trader-joes-suitability/main/public/tjIcon.png'
   }
 };
 
