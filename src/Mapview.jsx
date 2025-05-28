@@ -11,17 +11,17 @@ const MapView = () => {
   const [selectedGeometry, setSelectedGeometry] = useState(null);
   const [customPointMode, setCustomPointMode] = useState(false);
   const [showSidebar, setShowSidebar] = useState(true);
-
   const [showMobileSplash, setShowMobileSplash] = useState(false);
+  const [showInfoPopup, setShowInfoPopup] = useState(false);
   const isMobile = window.innerWidth <= 768;
 
   useEffect(() => {
-    if (window.innerWidth <= 768) {
+    if (isMobile) {
       setShowMobileSplash(true);
     }
   }, []);
 
-  if (showMobileSplash) {
+  if (showMobileSplash || showInfoPopup) {
     return (
       <div
         style={{
@@ -54,12 +54,15 @@ const MapView = () => {
           }}
         >
           <h2 style={{ color: 'var(--tj-red)', marginBottom: '0.5em' }}>
-            This map is best viewed on a desktop
+            Trader Joe's Suitability Explorer
           </h2>
+          <p>This application is not affiliated with Trader Joe’s and is for educational purposes only. Accuracy of data is not guaranteed.</p>
+          <p>This application is designed for larger screens. Please visit this app on a desktop computer for enhanced functionality and a better viewing experience. Try rotating your phone.</p>
           <p>
-            This application is designed for larger screens. Please visit this app on a desktop computer for enhanced functionality and a better viewing experience.
+            <a href="https://www.nevinm.com" target="_blank" rel="noopener noreferrer">Website</a> |{' '}
+            <a href="https://github.com/NMGIS" target="_blank" rel="noopener noreferrer">GitHub</a> |{' '}
+            <a href="https://www.linkedin.com/in/nevinmcintyregis" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </p>
-          <p>ROTATE YOUR PHONE</p>
           <button
             style={{
               marginTop: '1em',
@@ -71,15 +74,17 @@ const MapView = () => {
               fontWeight: 'bold',
               cursor: 'pointer'
             }}
-            onClick={() => setShowMobileSplash(false)}
+            onClick={() => {
+              setShowMobileSplash(false);
+              setShowInfoPopup(false);
+            }}
           >
-            Continue Anyway
+            Continue
           </button>
         </div>
       </div>
     );
   }
-
 
   return (
     <div className={isMobile ? 'mobile-scroll-wrapper' : ''}>
@@ -106,6 +111,34 @@ const MapView = () => {
         setTemporaryGeometry={setSelectedGeometry}
         customPointMode={customPointMode}
       />
+
+      <button
+        onClick={() => setShowInfoPopup(true)}
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 1500,
+          backgroundColor: '#24a0ed',
+          color: 'white',
+          border: 'none',
+          borderRadius: '50%',
+          width: '18px',
+          height: '18px',
+          fontSize: '10px',
+          fontWeight: 'bold',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.25)',
+          cursor: 'pointer'
+        }}
+        title="Info / Disclaimer"
+      >
+        i
+      </button>
+
+
     </div>
   );
 };
