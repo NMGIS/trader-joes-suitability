@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const hollowRenderer = {
   type: 'simple',
@@ -16,9 +16,29 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
   const mapRef = useRef(null);
   const modeRef = useRef(customPointMode);
 
+  const getInitialHeight = () => {
+    return window.innerWidth <= 768 ? `${window.innerHeight * 0.6}px` : '100vh';
+  };
+
+  const [mapHeight, setMapHeight] = useState(getInitialHeight());
+
   useEffect(() => {
     modeRef.current = customPointMode;
   }, [customPointMode]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setMapHeight(window.innerWidth <= 768 ? `${window.innerHeight * 0.6}px` : '100vh');
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const waitForArcGIS = () => {
@@ -108,7 +128,6 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           labelsVisible: true
         });
 
-        // --- NEW: Create separate graphics layers ---
         const primaryGraphicsLayer = new GraphicsLayer({ title: 'Primary Analysis Graphics' });
         const comparisonGraphicsLayer = new GraphicsLayer({ title: 'Comparison Analysis Graphics' });
 
@@ -142,6 +161,14 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
               state: f.attributes.State
             }));
             setStores(features);
+            if (window.innerWidth <= 768 && window.innerHeight > window.innerWidth && results.features.length > 0) {
+  const allGeometries = results.features.map(f => f.geometry);
+  window.require(['esri/geometry/geometryEngine'], (geometryEngine) => {
+    const extent = geometryEngine.union(allGeometries).extent;
+    view.goTo(extent.expand(1.2)); // Add padding
+  });
+}
+
           });
 
           view.on('click', (event) => {
@@ -153,7 +180,6 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
               latitude: event.mapPoint.latitude
             };
 
-            // Remove old point marker only
             const oldPoint = view.graphics.items.find(g => g.attributes?.id === 'custom-analysis-point');
             if (oldPoint) view.graphics.remove(oldPoint);
 
@@ -188,7 +214,7 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
   }, [setLayers, setStores, setTemporaryGeometry]);
 
   return <div ref={mapRef} style={{
-    height: window.innerWidth <= 768 ? '60vh' : '100vh',
+    height: mapHeight,
     width: '100vw'
   }} />;
 };
