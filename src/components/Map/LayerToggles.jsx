@@ -1,13 +1,21 @@
 import { useState } from 'react';
 
-const layerLabels = {
-  walkability: 'Walkability Index',
-  blockGroups: 'Block Groups',
-  traderJoes: 'Trader Joe’s Stores'
+const layerInfo = {
+  walkability: {
+    label: 'Walkability Index'
+  },
+  blockGroups: {
+    label: 'Block Groups',
+    icon: './public/blockgroups.svg'
+  },
+  traderJoes: {
+    label: 'Trader Joe’s Stores',
+    icon: './public/tjicon.png'
+  }
 };
 
 const LayerToggles = ({ layers }) => {
-  const [_, forceRender] = useState(false); // force UI refresh
+  const [_, forceRender] = useState(false);
 
   const toggleLayer = (key) => {
     const layer = layers[key];
@@ -19,18 +27,26 @@ const LayerToggles = ({ layers }) => {
 
   return (
     <div>
-      {Object.keys(layerLabels).map((key) => (
+      {Object.keys(layerInfo).map((key) => (
         <div key={key} className="layer-toggle">
-          <label>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             <input
               type="checkbox"
               checked={layers[key]?.visible ?? false}
               onChange={() => toggleLayer(key)}
             />
-            {' '}{layerLabels[key]}
+            {layerInfo[key].label}
+            {layerInfo[key].icon && (
+              <img
+                src={layerInfo[key].icon}
+                alt=""
+                style={{ width: '18px', height: '18px' }}
+              />
+            )}
           </label>
         </div>
       ))}
+
     </div>
   );
 };
