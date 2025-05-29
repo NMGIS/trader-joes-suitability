@@ -82,13 +82,45 @@ export async function selectNearbyBlockGroups({
         (...modules) => resolve(modules)
       );
     });
+    const extent = geometryEngine.union(selected.map(f => f.geometry)).extent;
+
+    const incomeLayer = new FeatureLayer({
+      url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Median_Income_by_Race_and_Age_Selp_Emp_Boundaries/FeatureServer/2',
+      outFields: ['GEOID', 'B19049_001E', 'B19053_001E']
+    });
+
+    const incomeQuery = incomeLayer.createQuery();
+    incomeQuery.geometry = extent;
+    incomeQuery.spatialRelationship = 'intersects';
+    incomeQuery.returnGeometry = true;
+    incomeQuery.outFields = ['GEOID', 'B19049_001E', 'B19053_001E'];
+
+    const incomeResult = await incomeLayer.queryFeatures(incomeQuery);
+
+    let weightedIncomeSum = 0;
+    let totalHouseholdWeight = 0;
+
+    incomeResult.features.forEach(incomeFeat => {
+      const income = incomeFeat.attributes.B19049_001E;
+      const households = incomeFeat.attributes.B19053_001E || 0;
+
+      if (income != null && households > 0) {
+        weightedIncomeSum += income * households;
+        totalHouseholdWeight += households;
+      }
+    });
+
+    const avgMedianIncome = totalHouseholdWeight > 0
+      ? weightedIncomeSum / totalHouseholdWeight
+      : null;
+
 
     const eduLayer = new FeatureLayer({
       url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Educational_Attainment_Boundaries/FeatureServer/2',
       outFields: ['GEOID', 'B15002_calc_pctGEBAE', 'B15002_001E']
     });
 
-    const extent = geometryEngine.union(selected.map(f => f.geometry)).extent;
+
 
     const eduQuery = eduLayer.createQuery();
     eduQuery.geometry = extent;
@@ -137,6 +169,7 @@ export async function selectNearbyBlockGroups({
       totalAlone,
       avgMedianAge: weightedPopSum > 0 ? (weightedAgeSum / weightedPopSum) : 0,
       avgPopDensity: totalAreaSqMi > 0 ? (totalPop / totalAreaSqMi) : 0,
+      avgMedianIncome,
       avgEduPct,
       totalAreaSqMi
     };

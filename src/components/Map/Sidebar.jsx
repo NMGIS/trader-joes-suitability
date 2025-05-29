@@ -7,6 +7,7 @@ import { selectNearbyBlockGroups } from '../utils/selectNearbyBlockGroups';
 const defaultDemographics = {
   totalPop: 0,
   totalAlone: 0,
+  avgMedianIncome: null,
   avgMedianAge: 0,
   avgPopDensity: 0,
   avgEduPct: null,
@@ -309,6 +310,19 @@ const Sidebar = ({
               {comparisonMode && (
                 <span style={{ color: 'blue' }}>
                   {' '}~ {comparisonDemographics?.totalPop?.toLocaleString() || 'None'}
+                </span>
+              )}
+            </p>
+            <p style={{ fontSize: '0.9em' }}>
+              <strong>Median Household Income:</strong><br />
+              {demographics?.avgMedianIncome
+                ? `$${Math.round(demographics.avgMedianIncome).toLocaleString()}`
+                : 'None'}
+              {comparisonMode && (
+                <span style={{ color: 'blue' }}>
+                  {' '}~ {comparisonDemographics?.avgMedianIncome
+                    ? `$${Math.round(comparisonDemographics.avgMedianIncome).toLocaleString()}`
+                    : 'None'}
                 </span>
               )}
             </p>

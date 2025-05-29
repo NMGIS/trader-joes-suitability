@@ -84,15 +84,6 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           maxScale: 0
         });
 
-        const censusTractLayer = new FeatureLayer({
-          url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/Esri_Updated_Demographics_Variables/FeatureServer/4',
-          outFields: ['*'],
-          title: 'Census Tract Demographics',
-          visible: false,
-          renderer: hollowRenderer,
-          minScale: 250000
-        });
-
         const tjSymbol = new PictureMarkerSymbol({
           url: 'https://raw.githubusercontent.com/NMGIS/trader-joes-suitability/main/public/tjIcon.png',
           width: '24px',
