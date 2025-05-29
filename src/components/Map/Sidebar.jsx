@@ -102,6 +102,8 @@ const Sidebar = ({
   };
 
   const handleReset = () => {
+    const isoLayer = window.view.map.findLayerById('custom-isochrone');
+    if (isoLayer) window.view.map.remove(isoLayer);
     layers.primaryGraphics.removeAll();
     layers.comparisonGraphics.removeAll();
     window.view.graphics.removeAll(); // remove custom marker

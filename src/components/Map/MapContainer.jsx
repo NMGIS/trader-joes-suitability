@@ -251,7 +251,8 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
                 }
               });
 
-              const isoLayer = new GraphicsLayer({ title: 'Isochrone' });
+              const isoLayer = new GraphicsLayer({ title: 'Isochrone', id: 'custom-isochrone' });
+
               isoLayer.add(isochroneGraphic);
               map.add(isoLayer);
             } catch (err) {
