@@ -92,11 +92,10 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
 
         const tjRenderer = new SimpleRenderer({ symbol: tjSymbol });
 
-        const traderJoesLayer = new FeatureLayer({
-          url: 'https://services.arcgis.com/CkYmj4Spu6bZ7mge/arcgis/rest/services/Trader_Joes_Locations/FeatureServer/0',
+        const traderJoesLayer = new GeoJSONLayer({
+          url: "./Locations.geojson",
           outFields: ['*'],
-          title: 'Trader Joe’s',
-          visible: true,
+          title: "Trader Joe’s",
           renderer: tjRenderer,
           labelingInfo: [{
             labelExpressionInfo: {
@@ -117,7 +116,8 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
             },
             labelPlacement: "above-center",
             minScale: 200000
-          }],
+          }]
+          ,
           labelsVisible: true
         });
 
