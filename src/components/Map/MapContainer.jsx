@@ -143,11 +143,11 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
 
         map.addMany([
           walkabilityIndex,
+          driveTimeIsochrones,
           blockGroupsLayer,
-          traderJoesLayer,
-          primaryGraphicsLayer,
           comparisonGraphicsLayer,
-          driveTimeIsochrones
+          primaryGraphicsLayer,
+          traderJoesLayer
         ]);
 
         setLayers({
