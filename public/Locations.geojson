@@ -11760,6 +11760,27 @@
                 "State": "ID",
                 "Zipcode": 83864
             }
+        }
+        ,
+        {
+            "type": "Feature",
+            "id": 1000,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -116.5534,
+                    48.2767
+                ]
+            },
+            "properties": {
+                "ObjectID": 1000,
+                "StoreNo": 1000,
+                "Name": "Sandpoint (Test2)",
+                "Address": "Test Address",
+                "City": "Sandpoint",
+                "State": "ID",
+                "Zipcode": 83864
+            }
         } 
     ]
 }
