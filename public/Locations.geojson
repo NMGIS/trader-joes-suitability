@@ -11743,44 +11743,23 @@
         },
         {
             "type": "Feature",
-            "id": 999,
+            "id": 603,
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    -116.5535,
-                    48.2766
+                    -75.4373787797524,
+                    40.047148386483215
                 ]
             },
             "properties": {
-                "ObjectID": 999,
-                "StoreNo": 999,
-                "Name": "Sandpoint (Test)",
-                "Address": "Test Address",
-                "City": "Sandpoint",
-                "State": "ID",
-                "Zipcode": 83864
+                "ObjectID": 603,
+                "StoreNo": 584,
+                "Name": "Berwyn (584)",
+                "Address": "550 Lancaster Ave",
+                "City": "Berwyn",
+                "State": "PA",
+                "Zipcode": 19312
             }
         }
-        ,
-        {
-            "type": "Feature",
-            "id": 1000,
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -116.5534,
-                    48.2767
-                ]
-            },
-            "properties": {
-                "ObjectID": 1000,
-                "StoreNo": 1000,
-                "Name": "Sandpoint (Test2)",
-                "Address": "Test Address",
-                "City": "Sandpoint",
-                "State": "ID",
-                "Zipcode": 83864
-            }
-        } 
     ]
 }
