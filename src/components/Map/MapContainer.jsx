@@ -161,28 +161,28 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
 
         view.when(() => {
           window.view = view;
+          traderJoesLayer.when(() => {
+            traderJoesLayer.queryFeatures({
+              returnGeometry: true,
+              outFields: ['StoreNo', 'State'],
+              where: '1=1'
+            }).then((results) => {
+              const features = results.features.map((f) => ({
+                geometry: f.geometry,
+                storeNo: String(f.attributes.StoreNo),
+                state: f.attributes.State
+              }));
+              setStores(features);
+              if (window.innerWidth <= 768 && window.innerHeight > window.innerWidth && results.features.length > 0) {
+                const allGeometries = results.features.map(f => f.geometry);
+                window.require(['esri/geometry/geometryEngine'], (geometryEngine) => {
+                  const extent = geometryEngine.union(allGeometries).extent;
+                  view.goTo(extent.expand(1.2)); // Add padding
+                });
+              }
 
-          traderJoesLayer.queryFeatures({
-            returnGeometry: true,
-            outFields: ['StoreNo', 'State'],
-            where: '1=1'
-          }).then((results) => {
-            const features = results.features.map((f) => ({
-              geometry: f.geometry,
-              storeNo: String(f.attributes.StoreNo),
-              state: f.attributes.State
-            }));
-            setStores(features);
-            if (window.innerWidth <= 768 && window.innerHeight > window.innerWidth && results.features.length > 0) {
-              const allGeometries = results.features.map(f => f.geometry);
-              window.require(['esri/geometry/geometryEngine'], (geometryEngine) => {
-                const extent = geometryEngine.union(allGeometries).extent;
-                view.goTo(extent.expand(1.2)); // Add padding
-              });
-            }
-
+            });
           });
-
           view.on('click', async (event) => {
             if (!modeRef.current) return;
 
