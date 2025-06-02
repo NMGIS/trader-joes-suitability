@@ -11760,6 +11760,486 @@
                 "State": "PA",
                 "Zipcode": 19312
             }
+        },
+        {
+            "type": "Feature",
+            "id": 604,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.21541688795986,
+                    40.52195257142818
+                ]
+            },
+            "properties": {
+                "ObjectID": 604,
+                "StoreNo": 580,
+                "Name": "Staten Island - Tottenville (580)",
+                "Address": "6400 Amboy Rd",
+                "City": "Staten Island",
+                "State": "NY",
+                "Zipcode": 10309
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 605,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.085,
+                    38.9605
+                ]
+            },
+            "properties": {
+                "ObjectID": 605,
+                "StoreNo": 819,
+                "Name": "Washington - Friendship Heights (819)",
+                "Address": "5335 Wisconsin Ave NW",
+                "City": "Washington",
+                "State": "DC",
+                "Zipcode": 20015
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 606,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.15257539009173,
+                    39.08645647153885
+                ]
+            },
+            "properties": {
+                "ObjectID": 606,
+                "StoreNo": 589,
+                "Name": "Rockville - Town Square (589)",
+                "Address": "225 N Washington St",
+                "City": "Rockville",
+                "State": "MD",
+                "Zipcode": 20850
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 607,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -121.46026794575302,
+                    37.756240824610714
+                ]
+            },
+            "properties": {
+                "ObjectID": 607,
+                "StoreNo": 269,
+                "Name": "Tracy (269)",
+                "Address": "2530 Naglee Rd",
+                "City": "Tracy",
+                "State": "CA",
+                "Zipcode": 95304
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 608,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -117.11525302417105,
+                    34.02864575090159
+                ]
+            },
+            "properties": {
+                "ObjectID": 608,
+                "StoreNo": 268,
+                "Name": "Yucaipa (268)",
+                "Address": "31545 Yucaipa Boulevard",
+                "City": "Yucaipa",
+                "State": "CA",
+                "Zipcode": 92399
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 609,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -90.08788589459591,
+                    29.96094850783413
+                ]
+            },
+            "properties": {
+                "ObjectID": 609,
+                "StoreNo": 811,
+                "Name": "New Orleans - Mid-City (811)",
+                "Address": "2501 Tulane Ave",
+                "City": "New Orleans",
+                "State": "LA",
+                "Zipcode": 70119
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 610,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -74.30760460330367,
+                    40.55980947540138
+                ]
+            },
+            "properties": {
+                "ObjectID": 610,
+                "StoreNo": 593,
+                "Name": "Woodbridge (593)",
+                "Address": "675 US-1",
+                "City": "Iselin",
+                "State": "NJ",
+                "Zipcode": 8830
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 611,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -73.7942893743733,
+                    42.59988927117665
+                ]
+            },
+            "properties": {
+                "ObjectID": 611,
+                "StoreNo": 579,
+                "Name": "Glenmont (579)",
+                "Address": "388 Feura Bush Rd",
+                "City": "Glenmont",
+                "State": "NY",
+                "Zipcode": 12077
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 612,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -71.15809319363046,
+                    42.282281871371325
+                ]
+            },
+            "properties": {
+                "ObjectID": 612,
+                "StoreNo": 588,
+                "Name": "Boston - West Roxbury (588)",
+                "Address": "1999 Centre St",
+                "City": "Boston",
+                "State": "MA",
+                "Zipcode": 2132
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 613,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -105.05118593217102,
+                    39.86678077153868
+                ]
+            },
+            "properties": {
+                "ObjectID": 613,
+                "StoreNo": 308,
+                "Name": "Westminster (308)",
+                "Address": "9350 Sheridan Blvd",
+                "City": "Westminster",
+                "State": "CO",
+                "Zipcode": 80031
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 614,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -75.63341207830592,
+                    40.02936625186898
+                ]
+            },
+            "properties": {
+                "ObjectID": 614,
+                "StoreNo": 594,
+                "Name": "Exton (594)",
+                "Address": "125 West Lincoln Hwy",
+                "City": "Exton",
+                "State": "PA",
+                "Zipcode": 19341
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 615,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -97.6361686035159,
+                    35.55554585804151
+                ]
+            },
+            "properties": {
+                "ObjectID": 615,
+                "StoreNo": 463,
+                "Name": "Oklahoma City - Northwest (463)",
+                "Address": "6920 Northwest Expy",
+                "City": "Oklahoma City",
+                "State": "OK",
+                "Zipcode": 73132
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 616,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -78.98403924777149,
+                    33.65241166584188
+                ]
+            },
+            "properties": {
+                "ObjectID": 616,
+                "StoreNo": 828,
+                "Name": "Myrtle Beach (828)",
+                "Address": "115 SayeBrook Pkwy",
+                "City": "Myrtle Beach",
+                "State": "SC",
+                "Zipcode": 29588
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 617,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -98.58331676810862,
+                    29.54930348639626
+                ]
+            },
+            "properties": {
+                "ObjectID": 617,
+                "StoreNo": 457,
+                "Name": "San Antonio - Northwest (457)",
+                "Address": "11745 I-10 W",
+                "City": "San Antonio",
+                "State": "TX",
+                "Zipcode": 78230
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 618,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -96.72360253988778,
+                    33.1752241126961
+                ]
+            },
+            "properties": {
+                "ObjectID": 618,
+                "StoreNo": 410,
+                "Name": "McKinney - West (410)",
+                "Address": "8101 Eldorado Pkwy",
+                "City": "McKinney",
+                "State": "TX",
+                "Zipcode": 75070
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 619,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -112.37533267022515,
+                    33.4645839059119
+                ]
+            },
+            "properties": {
+                "ObjectID": 619,
+                "StoreNo": 289,
+                "Name": "Goodyear (289)",
+                "Address": "N Bullard Ave & McDowell Rd",
+                "City": "Goodyear",
+                "State": "AZ",
+                "Zipcode": 85395
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 620,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -117.76157190357218,
+                    34.11050134106565
+                ]
+            },
+            "properties": {
+                "ObjectID": 620,
+                "StoreNo": 277,
+                "Name": "La Verne (277)",
+                "Address": "2330 Foothill Blvd",
+                "City": "La Verne",
+                "State": "CA",
+                "Zipcode": 91750
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 621,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.77322071698639,
+                    36.06422304520912
+                ]
+            },
+            "properties": {
+                "ObjectID": 621,
+                "StoreNo": 462,
+                "Name": "Broken Arrow (462)",
+                "Address": "1451 E Hillside Dr",
+                "City": "Broken Arrow",
+                "State": "OK",
+                "Zipcode": 74012
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 622,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -97.941658303709,
+                    30.306194088030132
+                ]
+            },
+            "properties": {
+                "ObjectID": 622,
+                "StoreNo": 450,
+                "Name": "Austin - Bee Cave (450)",
+                "Address": "12812 Shops Pkwy",
+                "City": "Bee Cave",
+                "State": "TX",
+                "Zipcode": 78738
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 623,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -122.40991768957804,
+                    45.50053214994411
+                ]
+            },
+            "properties": {
+                "ObjectID": 623,
+                "StoreNo": 276,
+                "Name": "Gresham (276)",
+                "Address": "2083 NE Burnside Rd",
+                "City": "Gresham",
+                "State": "OR",
+                "Zipcode": 97030
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 624,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -73.12774533210782,
+                    41.27170026238264
+                ]
+            },
+            "properties": {
+                "ObjectID": 624,
+                "StoreNo": 587,
+                "Name": "Shelton (587)",
+                "Address": "801 Bridgeport Ave",
+                "City": "Shelton",
+                "State": "CT",
+                "Zipcode": 6484
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 625,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -84.59380443243546,
+                    33.395833502925534
+                ]
+            },
+            "properties": {
+                "ObjectID": 625,
+                "StoreNo": 800,
+                "Name": "Peachtree City (800)",
+                "Address": "258 City Circle",
+                "City": "Peachtree City",
+                "State": "GA",
+                "Zipcode": 30269
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 626,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -92.3731867033745,
+                    38.95824762892781
+                ]
+            },
+            "properties": {
+                "ObjectID": 626,
+                "StoreNo": 808,
+                "Name": "Columbia (808)",
+                "Address": "201 N Stadium Blvd",
+                "City": "Columbia",
+                "State": "MO",
+                "Zipcode": 65203
+            }
+        },
+        {
+            "type": "Feature",
+            "id": 627,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -118.53569410356724,
+                    34.23809225591061
+                ]
+            },
+            "properties": {
+                "ObjectID": 627,
+                "StoreNo": 312,
+                "Name": "Northridge (312)",
+                "Address": "9224 Reseda Blvd",
+                "City": "Northridge",
+                "State": "CA",
+                "Zipcode": 91325
+            }
         }
     ]
 }
