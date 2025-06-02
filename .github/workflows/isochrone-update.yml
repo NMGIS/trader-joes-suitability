@@ -1,0 +1,42 @@
+name: Update Isochrones on Location Change
+
+on:
+  push:
+    paths:
+      - 'public/Locations.geojson'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install geopandas openrouteservice shapely
+
+      - name: Run isochrone generator
+        env:
+          ORS_API_KEY: ${{ secrets.ORS_API_KEY }}
+        run: |
+          python scripts/generate_isochrones.py
+
+      - name: Commit and push changes (non-main branches only)
+        if: github.ref_name != 'main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+          git add public/trader_joes_isochrones.geojson processing/processed.txt
+          git commit -m "Update isochrones and processed log [skip ci]" || echo "No changes to commit"
+          git push origin HEAD:${{ github.ref_name }}
