@@ -3163,26 +3163,6 @@
         },
         {
             "type": "Feature",
-            "id": 162,
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    -118.53530133999999,
-                    34.238077525000051
-                ]
-            },
-            "properties": {
-                "ObjectID": 162,
-                "StoreNo": 12,
-                "Name": "Northridge (12)",
-                "Address": "9224 Reseda Blvd",
-                "City": "Northridge",
-                "State": "CA",
-                "Zipcode": 91325
-            }
-        },
-        {
-            "type": "Feature",
             "id": 163,
             "geometry": {
                 "type": "Point",
