@@ -11740,6 +11740,26 @@
                 "State": "GA",
                 "Zipcode": 30005
             }
+        },
+        {
+            "type": "Feature",
+            "id": 999,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -116.5535,
+                    48.2766
+                ]
+            },
+            "properties": {
+                "ObjectID": 999,
+                "StoreNo": 999,
+                "Name": "Sandpoint (Test)",
+                "Address": "Test Address",
+                "City": "Sandpoint",
+                "State": "ID",
+                "Zipcode": 83864
+            }
         }
     ]
 }
