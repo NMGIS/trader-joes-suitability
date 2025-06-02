@@ -30,7 +30,6 @@ jobs:
           python scripts/generate_isochrones.py
 
       - name: Commit and push changes (non-main branches only)
-        if: github.ref_name != 'main'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
