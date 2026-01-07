@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import MapContainer from './components/Map/MapContainer';
 import Sidebar from './components/Map/Sidebar';
 
+
 const MapView = () => {
   const [layers, setLayers] = useState({});
   const [stores, setStores] = useState([]);
