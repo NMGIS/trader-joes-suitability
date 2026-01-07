@@ -12220,6 +12220,26 @@
                 "State": "CA",
                 "Zipcode": 91325
             }
+        },
+        {
+            "type": "Feature",
+            "id": 628,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.69114762883636,
+                    29.91954164948424
+                ]
+            },
+            "properties": {
+                "ObjectID": 628,
+                "StoreNo": 432,
+                "Name": "Cypress (432)",
+                "Address": "9715 Towne Lake Pkwy",
+                "City": "Cypress",
+                "State": "TX",
+                "Zipcode": 77433
+            }
         } 
     ]
 }
