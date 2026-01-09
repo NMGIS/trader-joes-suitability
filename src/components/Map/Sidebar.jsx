@@ -296,7 +296,14 @@ const Sidebar = ({
 
             <p style={{ fontSize: '0.9em', marginTop: '10px' }}>
               <strong>Selected Households:</strong><br />
-              {totalHouseholds?.toLocaleString() || 'None'}
+              <span
+                style={{
+                  color: comparisonMode ? 'var(--tj-red)' : 'inherit',
+                  fontWeight: comparisonMode ? 'bold' : 'normal'
+                }}
+              >
+                {totalHouseholds?.toLocaleString() || 'None'}
+              </span>
               {comparisonMode && (
                 <span style={{ color: 'blue' }}>
                   {' '}~ {comparisonHouseholds?.toLocaleString() || 'None'}
@@ -306,7 +313,14 @@ const Sidebar = ({
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Total Population:</strong><br />
-              {demographics?.totalPop?.toLocaleString() || 'None'}
+              <span
+                style={{
+                  color: comparisonMode ? 'var(--tj-red)' : 'inherit',
+                  fontWeight: comparisonMode ? 'bold' : 'normal'
+                }}
+              >
+                {demographics?.totalPop?.toLocaleString() || 'None'}
+              </span>
               {comparisonMode && (
                 <span style={{ color: 'blue' }}>
                   {' '}~ {comparisonDemographics?.totalPop?.toLocaleString() || 'None'}
@@ -315,9 +329,16 @@ const Sidebar = ({
             </p>
             <p style={{ fontSize: '0.9em' }}>
               <strong>Median Household Income:</strong><br />
-              {demographics?.avgMedianIncome
-                ? `$${Math.round(demographics.avgMedianIncome).toLocaleString()}`
-                : 'None'}
+              <span
+                style={{
+                  color: comparisonMode ? 'var(--tj-red)' : 'inherit',
+                  fontWeight: comparisonMode ? 'bold' : 'normal'
+                }}
+              >
+                {demographics?.avgMedianIncome
+                  ? `$${Math.round(demographics.avgMedianIncome).toLocaleString()}`
+                  : 'None'}
+              </span>
               {comparisonMode && (
                 <span style={{ color: 'blue' }}>
                   {' '}~ {comparisonDemographics?.avgMedianIncome
@@ -329,7 +350,14 @@ const Sidebar = ({
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Population Density:</strong><br />
-              {demographics?.avgPopDensity ? demographics.avgPopDensity.toFixed(1) + ' ppl/mi²' : 'None'}
+              <span
+                style={{
+                  color: comparisonMode ? 'var(--tj-red)' : 'inherit',
+                  fontWeight: comparisonMode ? 'bold' : 'normal'
+                }}
+              >
+                {demographics?.avgPopDensity ? demographics.avgPopDensity.toFixed(1) + ' ppl/mi²' : 'None'}
+              </span>
               {comparisonMode && (
                 <span style={{ color: 'blue' }}>
                   {' '}~ {comparisonDemographics?.avgPopDensity?.toFixed(1) || 'None'} ppl/mi²
@@ -338,7 +366,14 @@ const Sidebar = ({
             </p>
             <p style={{ fontSize: '0.9em' }}>
               <strong>Total Area (mi²):</strong><br />
-              {demographics?.totalAreaSqMi ? demographics.totalAreaSqMi.toFixed(2) : 'None'}
+              <span
+                style={{
+                  color: comparisonMode ? 'var(--tj-red)' : 'inherit',
+                  fontWeight: comparisonMode ? 'bold' : 'normal'
+                }}
+              >
+                {demographics?.totalAreaSqMi ? demographics.totalAreaSqMi.toFixed(2) : 'None'}
+              </span>
               {comparisonMode && (
                 <span style={{ color: 'blue' }}>
                   {' '}~ {comparisonDemographics?.totalAreaSqMi?.toFixed(2) || 'None'}
@@ -349,7 +384,14 @@ const Sidebar = ({
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Living Alone:</strong><br />
-              {demographics?.totalAlone?.toLocaleString() || 'None'}
+              <span
+                style={{
+                  color: comparisonMode ? 'var(--tj-red)' : 'inherit',
+                  fontWeight: comparisonMode ? 'bold' : 'normal'
+                }}
+              >
+                {demographics?.totalAlone?.toLocaleString() || 'None'}
+              </span>
               {comparisonMode && (
                 <span style={{ color: 'blue' }}>
                   {' '}~ {comparisonDemographics?.totalAlone?.toLocaleString() || 'None'}
@@ -359,7 +401,14 @@ const Sidebar = ({
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Median Age:</strong><br />
-              {demographics?.avgMedianAge ? demographics.avgMedianAge.toFixed(1) : 'None'}
+              <span
+                style={{
+                  color: comparisonMode ? 'var(--tj-red)' : 'inherit',
+                  fontWeight: comparisonMode ? 'bold' : 'normal'
+                }}
+              >
+                {demographics?.avgMedianAge ? demographics.avgMedianAge.toFixed(1) : 'None'}
+              </span>
               {comparisonMode && (
                 <span style={{ color: 'blue' }}>
                   {' '}~ {comparisonDemographics?.avgMedianAge?.toFixed(1) || 'None'}
@@ -369,9 +418,16 @@ const Sidebar = ({
 
             <p style={{ fontSize: '0.9em' }}>
               <strong>Bachelor’s Degree or Higher:</strong><br />
-              {demographics?.avgEduPct !== null && demographics?.avgEduPct !== undefined
-                ? demographics.avgEduPct.toFixed(1) + '%'
-                : 'None'}
+              <span
+                style={{
+                  color: comparisonMode ? 'var(--tj-red)' : 'inherit',
+                  fontWeight: comparisonMode ? 'bold' : 'normal'
+                }}
+              >
+                {demographics?.avgEduPct !== null && demographics?.avgEduPct !== undefined
+                  ? demographics.avgEduPct.toFixed(1) + '%'
+                  : 'None'}
+              </span>
               {comparisonMode && (
                 <span style={{ color: 'blue' }}>
                   {' '}~ {comparisonDemographics?.avgEduPct !== null && comparisonDemographics?.avgEduPct !== undefined
