@@ -127,7 +127,6 @@ const MapContainer = ({ setLayers, setStores, setTemporaryGeometry, customPointM
           visible: true,
           minScale: 1000000,
           maxScale: 0,
-          definitionExpression: "tmin > 5",  // Exclude 5-minute
           renderer: {
             type: "simple",
             symbol: {

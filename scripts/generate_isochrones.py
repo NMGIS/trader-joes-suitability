@@ -51,10 +51,9 @@ for idx, row in stores.iterrows():
         response = client.isochrones(
             locations=[coords],
             profile='driving-car',
-            range=[600],
+            range=[600],      # 10 minutes only
             units='m',
-            attributes=['total_pop'],
-            interval=300
+            attributes=['total_pop']
         )
 
         for feature in response['features']:
