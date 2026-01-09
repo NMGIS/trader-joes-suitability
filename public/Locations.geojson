@@ -12261,5 +12261,89 @@
                 "Zipcode": 6514
             }
         }
+        ,
+        {
+            "type": "Feature",
+            "id": 630,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.9796469321115,
+                    41.18935762363579
+                ]
+            },
+            "properties": {
+                "ObjectID": 630,
+                "StoreNo": 355,
+                "Name": "Riverdale - Ogden (355)",
+                "Address": "4060 Riverdale Rd Suite B",
+                "City": "Riverdale",
+                "State": "UT",
+                "Zipcode": 84405
+            }
+        }
+        ,
+        {
+            "type": "Feature",
+            "id": 631,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -111.837282003299,
+                    40.664548971406035
+                ]
+            },
+            "properties": {
+                "ObjectID": 631,
+                "StoreNo": 357,
+                "Name": "Holladay (357)",
+                "Address": "1895 East Rodeo Walk Dr",
+                "City": "Holladay",
+                "State": "UT",
+                "Zipcode": 84117
+            }
+        }
+        ,
+        {
+            "type": "Feature",
+            "id": 632,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -81.09485140374505,
+                    29.21752167535741
+                ]
+            },
+            "properties": {
+                "ObjectID": 632,
+                "StoreNo": 797,
+                "Name": "Daytona Beach (797)",
+                "Address": "1511 Cornerstone Blvd",
+                "City": "Daytona Beach",
+                "State": "FL",
+                "Zipcode": 32117
+            }
+        }
+        ,
+        {
+            "type": "Feature",
+            "id": 633,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -122.83437710521801,
+                    47.041568053017365
+                ]
+            },
+            "properties": {
+                "ObjectID": 633,
+                "StoreNo": 292,
+                "Name": "Lacey (292)",
+                "Address": "691 Sleater Kinney Rd SE",
+                "City": "Lacey",
+                "State": "WA",
+                "Zipcode": 98503
+            }
+        }
     ]
 }
