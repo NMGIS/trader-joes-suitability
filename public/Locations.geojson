@@ -12240,6 +12240,26 @@
                 "State": "TX",
                 "Zipcode": 77433
             }
-        } 
+        },
+        {
+            "type": "Feature",
+            "id": 629,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.69114762883636,
+                    41.37524135443105
+                ]
+            },
+            "properties": {
+                "ObjectID": 629,
+                "StoreNo": 597,
+                "Name": "Hamden (597)",
+                "Address": "46 Skiff St",
+                "City": "Hamden",
+                "State": "CT",
+                "Zipcode": 6514
+            }
+        }
     ]
 }
