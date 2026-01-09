@@ -1,0 +1,76 @@
+name: Build & Deploy Trader Joes Suitability
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Detect if Locations.geojson changed
+      - name: Check for location changes
+        id: locations
+        run: |
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep -q "public/Locations.geojson" \
+            && echo "changed=true" >> $GITHUB_OUTPUT \
+            || echo "changed=false" >> $GITHUB_OUTPUT
+
+      # ----------------------
+      # ISOCHRONE GENERATION
+      # ----------------------
+      - name: Set up Python
+        if: steps.locations.outputs.changed == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        if: steps.locations.outputs.changed == 'true'
+        run: |
+          pip install geopandas openrouteservice shapely
+
+      - name: Generate isochrones
+        if: steps.locations.outputs.changed == 'true'
+        env:
+          ORS_API_KEY: ${{ secrets.ORS_API_KEY }}
+        run: |
+          python scripts/generate_isochrones.py
+
+      - name: Commit isochrone updates
+        if: steps.locations.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add public/trader_joes_isochrones.geojson processing/processed.txt
+          git diff --cached --quiet || git commit -m "Update isochrones"
+          git push
+
+      # ----------------------
+      # BUILD REACT APP
+      # ----------------------
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      # ----------------------
+      # DEPLOY
+      # ----------------------
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
