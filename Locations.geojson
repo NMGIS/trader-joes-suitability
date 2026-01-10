@@ -12095,7 +12095,7 @@
                 "ObjectID": 621,
                 "StoreNo": 462,
                 "Name": "Broken Arrow (462)",
-                "Address": "1451 E Hillside Dr",
+                "Address": "1525 E Hillside Dr",
                 "City": "Broken Arrow",
                 "State": "OK",
                 "Zipcode": 74012
@@ -12345,5 +12345,131 @@
                 "Zipcode": 98503
             }
         }
+        ,
+        {
+            "type": "Feature",
+            "id": 634,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -80.72811274110302,
+                    28.24129979999998
+                ]
+            },
+            "properties": {
+                "ObjectID": 634,
+                "StoreNo": 848,
+                "Name": "Melbourne (848)",
+                "Address": "2221 Town Center Ave, Ste 101",
+                "City": "Melbourne",
+                "State": "FL",
+                "Zipcode": 32940
+            }
+        }
+        ,
+        {
+            "type": "Feature",
+            "id": 635,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -95.2460263613904,
+                    30.049777901368888
+                ]
+            },
+            "properties": {
+                "ObjectID": 635,
+                "StoreNo": 433,
+                "Name": "Kingwood (433)",
+                "Address": "600 Kingwood Dr",
+                "City": "Kingwood",
+                "State": "TX",
+                "Zipcode": 77339
+            }
+        }
+        ,
+        {
+            "type": "Feature",
+            "id": 636,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -117.91814667301828,
+                    33.653290630749666
+                ]
+            },
+            "properties": {
+                "ObjectID": 636,
+                "StoreNo": 290,
+                "Name": "Costa Mesa (290)",
+                "Address": "2170 Harbor Blvd, Ste 100",
+                "City": "Costa Mesa",
+                "State": "CA",
+                "Zipcode": 92627
+            }
+        }
+        ,
+        {
+            "type": "Feature",
+            "id": 637,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -81.16046183240996,
+                    34.07318194703296
+                ]
+            },
+            "properties": {
+                "ObjectID": 637,
+                "StoreNo": 856,
+                "Name": "Columbia (856)",
+                "Address": "275 Harbison Blvd",
+                "City": "Columbia",
+                "State": "SC",
+                "Zipcode": 29212
+            }
+        }
+        ,
+        {
+            "type": "Feature",
+            "id": 638,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -78.6962886320279,
+                    42.98386957114674
+                ]
+            },
+            "properties": {
+                "ObjectID": 638,
+                "StoreNo": 575,
+                "Name": "Williamsville (575)",
+                "Address": "5017 Transit Rd",
+                "City": "Williamsville",
+                "State": "NY",
+                "Zipcode": 14221
+            }
+        }
+        ,
+        {
+            "type": "Feature",
+            "id": 639,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -76.12966566113668,
+                    36.84157517224118
+                ]
+            },
+            "properties": {
+                "ObjectID": 639,
+                "StoreNo": 823,
+                "Name": "Virginia Beach (823)",
+                "Address": "220 Constitution Drive",
+                "City": "Virginia Beach",
+                "State": "VA",
+                "Zipcode": 23462
+            }
+        }        
     ]
 }
