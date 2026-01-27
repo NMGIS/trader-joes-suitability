@@ -1,8 +1,14 @@
-export async function fetchIsochrone(longitude, latitude, apiKey) {
+export async function fetchIsochrone(longitude, latitude) {
+  const apiKey = import.meta.env.VITE_ORS_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("Missing VITE_ORS_API_KEY environment variable");
+  }
+
   const response = await fetch("https://api.openrouteservice.org/v2/isochrones/driving-car", {
     method: "POST",
     headers: {
-      "Authorization": "5b3ce3597851110001cf6248433d516d39b9479eb0e8be7a09d14a00",
+      "Authorization": apiKey,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
